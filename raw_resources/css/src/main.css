@@ -15,7 +15,7 @@ html, body {
   display: grid;
   grid-template-columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
   grid-template-rows: [header] auto [headerbar] auto [body] auto [footer] auto;
-  grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
+  grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
   width: 100%;
   height: 100%; }
 
@@ -26,13 +26,15 @@ html, body {
 
 .div-headerbar {
   grid-area: headerbar;
+  position: relative;
   background-color: yellow; }
 
 .div-headerbar-across {
+  box-shadow: 0 2px 5px grey;
   position: absolute;
   z-index: 1000;
+  height: 2em;
   width: 100%;
-  height: 40px;
   background: white; }
 
 .div-headerbar > .div-menu-item {
@@ -51,11 +53,15 @@ html, body {
   background: white;
   cursor: pointer;
   color: black;
-  -moz-transition: ease 0.35s all;
-  -o-transition: ease 0.35s all;
-  -webkit-transition: ease 0.35s all;
-  transition: ease 0.35s all; }
+  -webkit-transition: ease 1s color,ease 350ms background;
+  -moz-transition: ease 1s color,ease 350ms background;
+  -o-transition: ease 1s color,ease 350ms background;
+  transition: ease 1s color,ease 350ms background; }
   .div-headerbar > .div-menu-item > .div-menu-item-button:hover {
+    -webkit-transition: ease 350ms all;
+    -moz-transition: ease 350ms all;
+    -o-transition: ease 350ms all;
+    transition: ease 350ms all;
     background: #e68a46;
     color: white;
     line-height: 6em; }
@@ -64,10 +70,13 @@ html, body {
     color: #DEEFF5;
     position: absolute;
     top: -2em; }
-
-.div-headerbar > .div-menu-item > .div-menu-item-button.selected {
-  background: orange;
-  color: white; }
+  .div-headerbar > .div-menu-item > .div-menu-item-button.selected {
+    -webkit-transition: ease 150ms background;
+    -moz-transition: ease 150ms background;
+    -o-transition: ease 150ms background;
+    transition: ease 150ms background;
+    background: orange;
+    color: white; }
 
 .div-headerbar > .div-menu-item > .div-menu-item-child-container {
   position: absolute;
@@ -76,10 +85,21 @@ html, body {
   background: white;
   color: #666;
   padding: 5px;
-  -moz-transition: ease 0.35s all;
-  -o-transition: ease 0.35s all;
-  -webkit-transition: ease 0.35s all;
-  transition: ease 0.35s all; }
+  box-shadow: 0 1px 5px white;
+  -webkit-transition: ease 350ms all;
+  -moz-transition: ease 350ms all;
+  -o-transition: ease 350ms all;
+  transition: ease 350ms all;
+  animation: mymove 1s ease 5s infinite;
+  outline-offset: 0;
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: white; }
+
+@keyframes mymove {
+  to {
+    outline-offset: 5px;
+    outline-color: rgba(255, 255, 255, 0); } }
 
 .div-headerbar > .div-menu-item > .div-menu-item-child-container.visible {
   top: 2em; }
@@ -111,15 +131,15 @@ html, body {
 
 .div-sidebar {
   grid-area: sidebar;
-  background-color: yellow; }
+  background-color: white; }
 
 .div-maincontent {
   grid-area: maincontent;
-  background-color: green; }
+  background-color: white; }
 
 .div-footer {
   grid-area: footer;
-  background-color: red; }
+  background-color: white; }
 
 .noselect {
   -webkit-touch-callout: none;
