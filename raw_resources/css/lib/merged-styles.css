@@ -1,0 +1,135 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  width: 100%;
+  height: 100%
+}
+#root {
+  width: 100%;
+  height: 100%
+}
+.div-main {
+  display: grid;
+  grid-template-columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
+  grid-template-rows: [header] auto [headerbar] auto [body] auto [footer] auto;
+  grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
+  width: 100%;
+  height: 100%
+}
+.div-header {
+  grid-area: header;
+  background-color: red;
+  z-index: 1000
+}
+.div-headerbar {
+  grid-area: headerbar;
+  background-color: #ff0
+}
+.div-headerbar-across {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 40px;
+  background: #fff
+}
+.div-headerbar > .div-menu-item {
+  position: relative;
+  display: inline-block
+}
+.div-headerbar > .div-menu-item > .div-menu-item-button {
+  z-index: 1000;
+  overflow: hidden;
+  display: inline-block;
+  padding: 0 10px;
+  height: 2em;
+  font-size: 1em;
+  line-height: 2em;
+  position: relative;
+  background: #fff;
+  cursor: pointer;
+  color: #000;
+  -moz-transition: ease .35s all;
+  -o-transition: ease .35s all;
+  -webkit-transition: ease .35s all;
+  transition: ease .35s all
+}
+.div-headerbar > .div-menu-item > .div-menu-item-button:hover {
+  background: #e68a46;
+  color: #fff;
+  line-height: 6em
+}
+.div-headerbar > .div-menu-item > .div-menu-item-button:before {
+  content: attr(data-text);
+  color: #deeff5;
+  position: absolute;
+  top: -2em
+}
+.div-headerbar > .div-menu-item > .div-menu-item-button.selected {
+  background: orange;
+  color: #fff
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container {
+  position: absolute;
+  top: -20em;
+  left: 0;
+  background: #fff;
+  color: #666;
+  padding: 5px;
+  -moz-transition: ease .35s all;
+  -o-transition: ease .35s all;
+  -webkit-transition: ease .35s all;
+  transition: ease .35s all
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container.visible {
+  top: 2em
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container > a.link {
+  cursor: pointer;
+  display: block;
+  padding: 3px 20px;
+  color: #333;
+  white-space: nowrap
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container > a.link:hover {
+  color: #000;
+  background: #f1f1f1
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container > div.blurb {
+  display: block;
+  padding: 3px 20px;
+  border: 1px solid #666;
+  border-radius: 4px;
+  box-sizing: border-box;
+  white-space: nowrap
+}
+.div-headerbar > .div-menu-item > .div-menu-item-child-container > div.note {
+  display: block;
+  padding: 3px 20px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-style: italic
+}
+.div-sidebar {
+  grid-area: sidebar;
+  background-color: #ff0
+}
+.div-maincontent {
+  grid-area: maincontent;
+  background-color: green
+}
+.div-footer {
+  grid-area: footer;
+  background-color: red
+}
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
+}
