@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 'Varela Round', sans-serif;
   font-size: 14px;
   width: 100%;
   height: 100%; }
@@ -11,11 +11,19 @@ html, body {
   width: 100%;
   height: 100%; }
 
+a:link, a:visited {
+  color: #317795;
+  text-decoration: none;
+  font-weight: normal; }
+
+a:hover, a:focus {
+  color: #23527c; }
+
 .div-main {
   display: grid;
   grid-template-columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
-  grid-template-rows: [header] auto [headerbar] auto [body] auto [footer] auto;
-  grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
+  grid-template-rows: [header] auto [headerbar] 2.6em [body] auto [footer] auto;
+  grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
   width: 100%;
   height: 100%; }
 
@@ -26,16 +34,16 @@ html, body {
 
 .div-headerbar {
   grid-area: headerbar;
-  position: relative;
-  background-color: yellow; }
+  position: relative; }
 
 .div-headerbar-across {
-  box-shadow: 0 2px 5px grey;
+  border-bottom: 1px solid #f1f1f1;
   position: absolute;
   z-index: 1000;
-  height: 2em;
+  height: 2.6em;
   width: 100%;
-  background: white; }
+  background: #272847;
+  border-radius: 20px; }
 
 .div-headerbar > .div-menu-item {
   position: relative;
@@ -50,9 +58,12 @@ html, body {
   font-size: 1em;
   line-height: 2em;
   position: relative;
-  background: white;
   cursor: pointer;
-  color: black;
+  color: white;
+  border-radius: 20px;
+  margin-top: 0.30em;
+  margin-left: 0.7em;
+  box-sizing: border-box;
   -webkit-transition: ease 1s color,ease 350ms background;
   -moz-transition: ease 1s color,ease 350ms background;
   -o-transition: ease 1s color,ease 350ms background;
@@ -63,11 +74,10 @@ html, body {
     -o-transition: ease 350ms all;
     transition: ease 350ms all;
     background: #e68a46;
-    color: white;
-    line-height: 6em; }
+    line-height: 6em;
+    border-bottom: 4px solid orange; }
   .div-headerbar > .div-menu-item > .div-menu-item-button:before {
     content: attr(data-text);
-    color: #DEEFF5;
     position: absolute;
     top: -2em; }
   .div-headerbar > .div-menu-item > .div-menu-item-button.selected {
@@ -75,71 +85,78 @@ html, body {
     -moz-transition: ease 150ms background;
     -o-transition: ease 150ms background;
     transition: ease 150ms background;
-    background: orange;
-    color: white; }
+    background: orange; }
 
-.div-headerbar > .div-menu-item > .div-menu-item-child-container {
+.div-headerbar > .div-menu-item .div-menu-item-child-container {
   position: absolute;
   top: -20em;
-  left: 0;
-  background: white;
-  color: #666;
-  padding: 5px;
-  box-shadow: 0 1px 5px white;
+  max-width: 260px;
   -webkit-transition: ease 350ms all;
   -moz-transition: ease 350ms all;
   -o-transition: ease 350ms all;
-  transition: ease 350ms all;
-  animation: mymove 1s ease 5s infinite;
-  outline-offset: 0;
-  outline-width: 1px;
-  outline-style: solid;
-  outline-color: white; }
+  transition: ease 350ms all; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container.visible {
+    top: 3em; }
 
-@keyframes mymove {
-  to {
-    outline-offset: 5px;
-    outline-color: rgba(255, 255, 255, 0); } }
-
-.div-headerbar > .div-menu-item > .div-menu-item-child-container.visible {
-  top: 2em; }
-
-.div-headerbar > .div-menu-item > .div-menu-item-child-container > a.link {
-  cursor: pointer;
-  display: block;
-  padding: 3px 20px;
-  color: #333;
-  white-space: nowrap; }
-  .div-headerbar > .div-menu-item > .div-menu-item-child-container > a.link:hover {
-    color: black;
-    background: #f1f1f1; }
-
-.div-headerbar > .div-menu-item > .div-menu-item-child-container > div.blurb {
-  display: block;
-  padding: 3px 20px;
-  border: 1px solid #666;
-  border-radius: 4px;
-  box-sizing: border-box;
-  white-space: nowrap; }
-
-.div-headerbar > .div-menu-item > .div-menu-item-child-container > div.note {
-  display: block;
-  padding: 3px 20px;
-  box-sizing: border-box;
-  white-space: nowrap;
-  font-style: italic; }
+.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container {
+  background: white;
+  padding: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  font-size: 0.9em; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > a.link {
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    white-space: nowrap;
+    background: #f9f9f9;
+    border-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-width: 0; }
+    .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > a.link:hover {
+      background: #f1f1f1; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > a.link:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > a.link:last-child {
+    border-bottom-width: 1px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div.blurb {
+    color: #000;
+    display: block;
+    padding: 10px;
+    border-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-width: 0;
+    box-sizing: border-box; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div.blurb:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div.blurb:last-child {
+    border-bottom-width: 1px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; }
+  .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div.note {
+    color: #000;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+    font-style: italic; }
 
 .div-sidebar {
   grid-area: sidebar;
-  background-color: white; }
+  background-color: green; }
 
 .div-maincontent {
   grid-area: maincontent;
-  background-color: white; }
+  background-color: red; }
 
 .div-footer {
   grid-area: footer;
-  background-color: white; }
+  background-color: blue; }
 
 .noselect {
   -webkit-touch-callout: none;

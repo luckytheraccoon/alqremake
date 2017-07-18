@@ -11509,64 +11509,153 @@ function Header() {
 }
 function HeaderBar() {
 
-    var items = [{ id: "item-1", text: "Home" }, { id: "item-2", text: "Meu Perfil" }, { id: "item-3", text: "Artigos e Notícias" }, { id: "item-4", text: "Seminários" }, { id: "item-5", text: "Consultas", children: [_react2.default.createElement(
+    var items = [{ id: "menuItem_1", text: "Home" }, { id: "menuItem_2", text: "Meu Perfil" }, { id: "menuItem_3", text: "Artigos e Notícias" }, { id: "menuItem_4", text: "Seminários" }, { id: "menuItem_5", text: "Consultas", children: [_react2.default.createElement(
             MenuItemChildContainer,
-            { key: "item-5-inner" },
+            { key: "menuItem_5-inner" },
             _react2.default.createElement(
                 Link,
-                null,
+                { url: "http://alquimiaalimentar.com/index.php?option=com_content&task=view&id=10&Itemid=8" },
                 " Aconselhamento Alimentar "
             ),
             _react2.default.createElement(
                 Link,
-                null,
+                { url: "http://alquimiaalimentar.com/index.php?option=com_content&task=view&id=354&Itemid=43" },
                 " Hipnoterapia "
             )
-        )] }, { id: "item-6", text: "Locais de Trabalho", children: [_react2.default.createElement(
+        )] }, { id: "menuItem_6", text: "Locais de Trabalho", children: [_react2.default.createElement(
             MenuItemChildContainer,
-            { key: "item-6-inner" },
+            { width: "230px", key: "menuItem_6-inner" },
             _react2.default.createElement(
                 Blurb,
                 null,
-                " Aconselhamento Alimentar "
+                " ",
+                _react2.default.createElement(
+                    "strong",
+                    null,
+                    "Associa\xE7\xE3o P\xE9talas C\xF3smicas"
+                ),
+                _react2.default.createElement("br", null),
+                "Lisboa - 211 561 754 "
             ),
             _react2.default.createElement(
                 Blurb,
                 null,
-                " Hipnoterapia "
+                " ",
+                _react2.default.createElement(
+                    "strong",
+                    null,
+                    " ",
+                    _react2.default.createElement(
+                        Link,
+                        { url: "http://www.equilibrio-holistico.com/" },
+                        "Equilibrio Holistico"
+                    )
+                ),
+                _react2.default.createElement("br", null),
+                "Telheiras - 217 574 531 "
+            ),
+            _react2.default.createElement(
+                Blurb,
+                null,
+                " ",
+                _react2.default.createElement(
+                    "strong",
+                    null,
+                    " ",
+                    _react2.default.createElement(
+                        Link,
+                        { url: "https://www.facebook.com/almamundi.welnesscenter" },
+                        "Almamundi Spa"
+                    )
+                ),
+                _react2.default.createElement("br", null),
+                "Fern\xE3o Ferro - 969 981 527 "
+            ),
+            _react2.default.createElement(
+                Blurb,
+                null,
+                " ",
+                _react2.default.createElement(
+                    "strong",
+                    null,
+                    " ",
+                    _react2.default.createElement(
+                        Link,
+                        { url: "http://tantralounge-porto.tk" },
+                        "Tantra Lounge"
+                    )
+                ),
+                _react2.default.createElement("br", null),
+                "Porto - 220 999 428 "
+            ),
+            _react2.default.createElement(
+                Blurb,
+                null,
+                " ",
+                _react2.default.createElement(
+                    "strong",
+                    null,
+                    "E-Mail:"
+                ),
+                " isacosta1963@gmail.com "
             )
-        )] }, { id: "item-7", text: "Parceiros", children: [_react2.default.createElement(
+        )] }, { id: "menuItem_7", text: "Parceiros", children: [_react2.default.createElement(
             MenuItemChildContainer,
-            { key: "item-7-inner" },
+            { key: "menuItem_7-inner" },
             _react2.default.createElement(
                 Link,
-                null,
-                " Aconselhamento Alimentar "
+                { url: "http://commedida.webnode.pt/" },
+                "ComMedida"
             ),
             _react2.default.createElement(
                 Link,
-                null,
-                " Hipnoterapia "
+                { url: "http://leitedaterra.blogspot.pt/" },
+                "Leite Da Terra"
+            ),
+            _react2.default.createElement(
+                Link,
+                { url: "http://www.biovivos.pt/" },
+                "BioVivos"
+            ),
+            _react2.default.createElement(
+                Link,
+                { url: "http://www.facebook.com/loveingreenjuicers" },
+                "Love In Green"
+            ),
+            _react2.default.createElement(
+                Link,
+                { url: "http://alquimiaalimentar.com/index.php?option=com_content&task=view&id=381" },
+                "Equil\xEDbrio Hol\xEDstico"
             )
-        )] }, { id: "item-8", text: "Reflexões", children: [_react2.default.createElement(
+        )] }, { id: "menuItem_8", text: "Reflexões", children: [_react2.default.createElement(
             MenuItemChildContainer,
-            { key: "item-8-inner" },
+            { width: "230px", key: "menuItem_8-inner" },
             _react2.default.createElement(
                 Note,
                 null,
-                " Aconselhamento Alimentar "
+                " Documentos PowerPoint que neles cont\xEAm reflex\xF5es para desfrutar calmamente. "
             ),
             _react2.default.createElement(
                 Link,
-                null,
-                " Hipnoterapia "
+                { url: "downloads/ComooravaGandhi.pps" },
+                "Reflex\xE3o \"Como Orava Ghandi\""
+            ),
+            _react2.default.createElement(
+                Link,
+                { url: "downloads/VoodoGanso.pps" },
+                "Reflex\xE3o \"Voo do Ganso\""
+            ),
+            _react2.default.createElement(
+                Link,
+                { url: "downloads/Girassol.pps" },
+                "Reflex\xE3o \"Girassol\""
             )
         )] }];
 
     var menuItems = items.map(function (item) {
         return _react2.default.createElement(
             MenuItem,
-            { key: item.id, label: item.text },
+            { id: item.id, key: item.id, label: item.text },
             item.children
         );
     });
@@ -11678,8 +11767,15 @@ var MenuItem = function (_React$Component2) {
 
     _createClass(MenuItem, [{
         key: "handleClick",
-        value: function handleClick() {
+        value: function handleClick(event) {
+
             if (this.props.children) {
+
+                var thisElement = event.target;
+                var childContainer = event.target.nextSibling;
+
+                childContainer.style.left = 0 - childContainer.offsetWidth / 2 + thisElement.offsetWidth / 2 + "px";
+
                 this.setState(function (prevState) {
                     var newState = !prevState.showChildren;
 
@@ -11708,7 +11804,7 @@ var MenuItem = function (_React$Component2) {
         value: function render() {
             var _this3 = this;
 
-            var buttonClass = "div-menu-item-button";
+            var buttonClass = "div-menu-item-button noselect";
             var children = _react2.default.createElement("span", null);
 
             if (this.state.showChildren) {
@@ -11725,7 +11821,7 @@ var MenuItem = function (_React$Component2) {
 
             return _react2.default.createElement(
                 "div",
-                { className: "div-menu-item noselect", onClick: this.handleClick },
+                { className: "div-menu-item", onClick: this.handleClick },
                 _react2.default.createElement(
                     "div",
                     { className: buttonClass, "data-text": this.props.label },
@@ -11752,18 +11848,23 @@ var MenuItemChildContainer = function (_React$Component3) {
         key: "render",
         value: function render() {
 
-            var classes = "div-menu-item-child-container noselect";
+            var classes = "div-menu-item-child-container";
 
             if (this.props.visible) {
                 classes += " visible";
             }
 
+            var style = { width: "230px" };
+
             return _react2.default.createElement(
                 "div",
-                { className: classes },
-                this.props.children,
-                " ",
-                this.props.loggedIn
+                { style: style, className: classes },
+                _react2.default.createElement(
+                    "div",
+                    { className: "div-inner-container" },
+                    this.props.children,
+                    this.props.loggedIn
+                )
             );
         }
     }]);
@@ -11774,7 +11875,7 @@ var MenuItemChildContainer = function (_React$Component3) {
 function Link(props) {
     return _react2.default.createElement(
         "a",
-        { className: "link" },
+        { href: props.url, className: "link" },
         props.children
     );
 }

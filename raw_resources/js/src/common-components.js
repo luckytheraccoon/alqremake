@@ -21,8 +21,15 @@ class MenuItem extends React.Component {
         this.state = {showChildren:false};
     }
 
-    handleClick() {
+    handleClick(event) {
+
         if (this.props.children) {
+            
+            let thisElement = event.target;
+            let childContainer = event.target.nextSibling;
+
+            childContainer.style.left = (0-(childContainer.offsetWidth/2)) + (thisElement.offsetWidth/2) + "px";
+
             this.setState(function (prevState) {
                 let newState = !prevState.showChildren;
 
@@ -49,7 +56,7 @@ class MenuItem extends React.Component {
     
     render() {
 
-        let buttonClass = "div-menu-item-button";
+        let buttonClass = "div-menu-item-button noselect";
         let children = <span/>;
 
         if(this.state.showChildren) {
@@ -58,14 +65,14 @@ class MenuItem extends React.Component {
 
         if(this.props.children) {
             children = React.Children.map(this.props.children, child => {
-                          return React.cloneElement(child, {
-                            visible: this.state.showChildren
-                        });
-                      });
+                return React.cloneElement(child, {
+                    visible: this.state.showChildren
+                });
+            });
         }
         
         return (
-            <div className="div-menu-item noselect" onClick={this.handleClick}>
+            <div className="div-menu-item" onClick={this.handleClick}>
                 <div className={buttonClass} data-text={this.props.label}>
                     {this.props.label}
                 </div>
@@ -83,19 +90,28 @@ class MenuItemChildContainer extends React.Component {
     
     render() {
 
-        let classes = "div-menu-item-child-container noselect";
+        let classes = "div-menu-item-child-container";
 
         if(this.props.visible) {
             classes += " visible";
         }
 
-        return <div className={classes}>{this.props.children} {this.props.loggedIn}</div>;
+        let style = {width:"230px"};
+
+        return (
+                <div style={style} className={classes}>
+                    <div className="div-inner-container">
+                        {this.props.children}
+                        {this.props.loggedIn}
+                    </div>
+                </div>
+        );
     }
 }
 
 function Link(props) {
     return (
-        <a className='link'>{props.children}</a>
+        <a href={props.url} className='link'>{props.children}</a>
     );
 }
 function Blurb(props) {
