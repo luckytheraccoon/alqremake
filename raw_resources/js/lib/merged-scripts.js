@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 function Header() {
     return (
         <DivContainer classes="div-header">
@@ -96,6 +97,68 @@ class MainApp extends React.Component {
         );
     }
 }
+
+const userReducer = function(state={}, action) {
+    switch(action.type) {
+        case "CHANGE_NAME": {
+            state = {...state, name: action.payload};
+            break;
+        }
+
+        case "CHANGE_AGE": {
+            state = {...state, age: action.payload};
+            break;
+        }
+
+        case "E": {
+            throw new Error("XXXXXX");
+        }
+    }
+    return state;
+};
+
+const tweetsReducer = function(state=[], action) {
+    return state;
+};
+
+const reducer = combineReducers({
+    user: userReducer,
+    tweets: tweetsReducer
+});
+
+const logger = (store)=>(next)=>(action)=>{
+    console.log("action fired", action);
+    next(action);
+};
+
+const error = (store)=>(next)=>(action)=>{
+    try {
+        next(action);
+    } catch(e) {
+        console.log("AAAAHHHH", e);
+    }
+};
+
+const middleware = applyMiddleware(logger, error);
+
+const store = createStore(reducer,{
+    user: {
+        name: "will",
+        age: 35
+    },
+    tweets: []
+}, middleware);
+
+
+store.subscribe(() => {
+    console.log("store changed", store.getState());
+});
+
+store.dispatch({type: "CHANGE_NAME", payload: "Will"});
+store.dispatch({type: "CHANGE_AGE", payload: 35});
+store.dispatch({type: "CHANGE_AGE", payload: 36});
+store.dispatch({type: "E", payload: 36});
+
 
 function LogoHeader() {
     return <img src="http://loosepixel.com/wp-content/uploads/2013/02/copy-flat_lplogo.png" />;

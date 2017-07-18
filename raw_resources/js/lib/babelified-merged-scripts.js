@@ -1,5 +1,7 @@
 "use strict";
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
@@ -13,6 +15,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 var _reactAddonsCssTransitionGroup = require("react-addons-css-transition-group");
 
 var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+
+var _redux = require("redux");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -253,6 +257,83 @@ var MainApp = function (_React$Component) {
 
     return MainApp;
 }(_react2.default.Component);
+
+var userReducer = function userReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var action = arguments[1];
+
+    switch (action.type) {
+        case "CHANGE_NAME":
+            {
+                state = _extends({}, state, { name: action.payload });
+                break;
+            }
+
+        case "CHANGE_AGE":
+            {
+                state = _extends({}, state, { age: action.payload });
+                break;
+            }
+
+        case "E":
+            {
+                throw new Error("XXXXXX");
+            }
+    }
+    return state;
+};
+
+var tweetsReducer = function tweetsReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var action = arguments[1];
+
+    return state;
+};
+
+var reducer = (0, _redux.combineReducers)({
+    user: userReducer,
+    tweets: tweetsReducer
+});
+
+var logger = function logger(store) {
+    return function (next) {
+        return function (action) {
+            console.log("action fired", action);
+            next(action);
+        };
+    };
+};
+
+var error = function error(store) {
+    return function (next) {
+        return function (action) {
+            try {
+                next(action);
+            } catch (e) {
+                console.log("AAAAHHHH", e);
+            }
+        };
+    };
+};
+
+var middleware = (0, _redux.applyMiddleware)(logger, error);
+
+var store = (0, _redux.createStore)(reducer, {
+    user: {
+        name: "will",
+        age: 35
+    },
+    tweets: []
+}, middleware);
+
+store.subscribe(function () {
+    console.log("store changed", store.getState());
+});
+
+store.dispatch({ type: "CHANGE_NAME", payload: "Will" });
+store.dispatch({ type: "CHANGE_AGE", payload: 35 });
+store.dispatch({ type: "CHANGE_AGE", payload: 36 });
+store.dispatch({ type: "E", payload: 36 });
 
 function LogoHeader() {
     return _react2.default.createElement("img", { src: "http://loosepixel.com/wp-content/uploads/2013/02/copy-flat_lplogo.png" });
