@@ -47,7 +47,9 @@ a:hover, a:focus {
 
 .div-headerbar > .div-menu-item {
   position: relative;
-  display: inline-block; }
+  display: inline-block;
+  margin-top: 0.30em;
+  margin-left: 0.7em; }
 
 .div-headerbar > .div-menu-item > .div-menu-item-button {
   z-index: 1000;
@@ -61,8 +63,6 @@ a:hover, a:focus {
   cursor: pointer;
   color: white;
   border-radius: 20px;
-  margin-top: 0.30em;
-  margin-left: 0.7em;
   box-sizing: border-box;
   -webkit-transition: ease 1s color,ease 350ms background;
   -moz-transition: ease 1s color,ease 350ms background;

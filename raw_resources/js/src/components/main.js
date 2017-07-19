@@ -1,7 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import {applyMiddleware, combineReducers, createStore} from "redux";
+
+export default function MainContainer() {
+    return (
+        <div className="div-main">
+            <Header />
+            <HeaderBar />
+            <Sidebar />
+            <MainContent />
+            <Footer />
+        </div>
+    );
+}
+
 function Header() {
     return (
         <DivContainer classes="div-header">
@@ -84,85 +95,8 @@ function Footer() {
         </DivContainer>
     );
 }
-class MainApp extends React.Component {
-    render() {
-        return (
-            <MainContainer>
-                <Header />
-                <HeaderBar />
-                <Sidebar />
-                <MainContent />
-                <Footer />
-            </MainContainer>
-        );
-    }
-}
-
-const userReducer = function(state={}, action) {
-    switch(action.type) {
-        case "CHANGE_NAME": {
-            state = {...state, name: action.payload};
-            break;
-        }
-
-        case "CHANGE_AGE": {
-            state = {...state, age: action.payload};
-            break;
-        }
-
-        case "E": {
-            throw new Error("XXXXXX");
-        }
-    }
-    return state;
-};
-
-const tweetsReducer = function(state=[], action) {
-    return state;
-};
-
-const reducer = combineReducers({
-    user: userReducer,
-    tweets: tweetsReducer
-});
-
-const logger = (store)=>(next)=>(action)=>{
-    console.log("action fired", action);
-    next(action);
-};
-
-const error = (store)=>(next)=>(action)=>{
-    try {
-        next(action);
-    } catch(e) {
-        console.log("AAAAHHHH", e);
-    }
-};
-
-const middleware = applyMiddleware(logger, error);
-
-const store = createStore(reducer,{
-    user: {
-        name: "will",
-        age: 35
-    },
-    tweets: []
-}, middleware);
 
 
-store.subscribe(() => {
-    console.log("store changed", store.getState());
-});
-
-store.dispatch({type: "CHANGE_NAME", payload: "Will"});
-store.dispatch({type: "CHANGE_AGE", payload: 35});
-store.dispatch({type: "CHANGE_AGE", payload: 36});
-store.dispatch({type: "E", payload: 36});
-
-
-function LogoHeader() {
-    return <img src="http://loosepixel.com/wp-content/uploads/2013/02/copy-flat_lplogo.png" />;
-}
 function DivContainer(props) {
     let className = "";
     if(typeof props.classes != "undefined") {
@@ -171,9 +105,22 @@ function DivContainer(props) {
     className = className + "div-container";
     return <div className={className}>{props.children}</div>;
 }
-function MainContainer(props) {
-    return <div className="div-main">{props.children}</div>;
+function Link(props) {
+    return (
+        <a href={props.url} className='link'>{props.children}</a>
+    );
 }
+function Blurb(props) {
+    return (
+        <div className='blurb'>{props.children}</div>
+    );
+}
+function Note(props) {
+    return (
+        <div className='note'>{props.children}</div>
+    );
+}
+
 class MenuItem extends React.Component {
 
     constructor(props) {
@@ -242,7 +189,6 @@ class MenuItem extends React.Component {
             </div>
         );
     }
-
 }
 class MenuItemChildContainer extends React.Component {
 
@@ -258,35 +204,15 @@ class MenuItemChildContainer extends React.Component {
             classes += " visible";
         }
 
-        let style = {width:"230px"};
+        let style = {width:this.props.width};
 
         return (
-                <div style={style} className={classes}>
-                    <div className="div-inner-container">
-                        {this.props.children}
-                        {this.props.loggedIn}
-                    </div>
+            <div style={style} className={classes}>
+                <div className="div-inner-container">
+                    {this.props.children}
+                    {this.props.loggedIn}
                 </div>
+            </div>
         );
     }
 }
-
-function Link(props) {
-    return (
-        <a href={props.url} className='link'>{props.children}</a>
-    );
-}
-function Blurb(props) {
-    return (
-        <div className='blurb'>{props.children}</div>
-    );
-}
-function Note(props) {
-    return (
-        <div className='note'>{props.children}</div>
-    );
-}
-ReactDOM.render(
-    <MainApp />,
-    document.getElementById("root")
-);

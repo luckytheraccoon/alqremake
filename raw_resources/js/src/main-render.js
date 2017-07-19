@@ -1,4 +1,6 @@
 ReactDOM.render(
-    <MainApp />,
+    <Provider store={store}> 
+        <MainApp /> 
+    </Provider>,
     document.getElementById("root")
 );
