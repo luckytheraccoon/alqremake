@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 import { fetchMainMenuItems } from "../actions/mainMenuActions";
+import { fetchContent } from "../actions/contentActions";
 
 export default function MainContainer() {
     return (
@@ -18,9 +19,7 @@ export default function MainContainer() {
 
 function Header() {
     return (
-        <DivContainer classes="div-header">
-            <div>header</div>
-        </DivContainer>
+        <DivContainer classes="div-header" />
     );
 }
 
@@ -40,13 +39,22 @@ class HeaderBar extends React.Component {
 
         const { mainMenuItems } = this.props;
 
-        console.log(mainMenuItems);
-
-        const menuItems = mainMenuItems.map((item) =>
-            <MenuItem id={item.id} key={item.id} label={item.text}>
-                {item.children}
-            </MenuItem>
-        );
+        const menuItems = mainMenuItems.map((item) => {
+            let children;
+            if(item.children) {
+                children = (
+                    <MenuItemChildContainer width={item.width}>
+                        {item.children}
+                    </MenuItemChildContainer>
+                );
+            }
+            
+            return(    
+                <MenuItem id={item.id} key={item.id} label={item.text}>
+                    {children}
+                </MenuItem>
+            );
+        });
 
         return (
             <DivContainer classes="div-headerbar">
@@ -59,19 +67,27 @@ class HeaderBar extends React.Component {
 
 @connect((store)=>{
     return {
-        mainMenuItems: store.mainMenuItems.mainMenuItems
+        content: store.content.content
     };
 })
 class MainContent extends React.Component {
-    
+
     componentWillMount() {
-        this.props.dispatch(fetchMainMenuItems());
+        this.props.dispatch(fetchContent());
     }
 
     render() {
+
+        const { content } = this.props;
+
         return (
             <DivContainer classes="div-maincontent">
-                <div>maincontent</div>
+                <div>{content.id}</div>
+                <div>{content.title}</div>
+                <div>{content.excerpt}</div>
+                <div>{content.body}</div>
+                <div>{content.date}</div>
+                <div>{content.author}</div>
             </DivContainer>
         );
     }
@@ -125,6 +141,7 @@ class MenuItem extends React.Component {
         this.state = {showChildren:false};
     }
 
+
     handleClick(event) {
 
         if (this.props.children) {
@@ -133,6 +150,7 @@ class MenuItem extends React.Component {
             let childContainer = event.target.nextSibling;
 
             childContainer.style.left = (0-(childContainer.offsetWidth/2)) + (thisElement.offsetWidth/2) + "px";
+            //childContainer.style.top = (0 - (childContainer.offsetHeight + 260 )) + "px";
 
             this.setState(function (prevState) {
                 let newState = !prevState.showChildren;
@@ -208,4 +226,4 @@ class MenuItemChildContainer extends React.Component {
     }
 }
 
-export { MenuItemChildContainer, Link, Blurb, Note };
+export { Link, Blurb, Note };

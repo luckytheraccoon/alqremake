@@ -61,7 +61,7 @@ a {
 	display: grid;
 	grid-template: {
 		columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
-	  	rows: [header] auto [headerbar] 2.6em [body] auto [footer] auto;
+	  	rows: [header] 200px [headerbar] 2.6em [body] auto [footer] auto;
 		areas: 
 		". header header ."
 		". headerbar headerbar ."
@@ -69,13 +69,30 @@ a {
 		". footer footer .";
 	}
 	@include full-span();
+	min-width: 1045px;
+
+	animation: {
+		name: headerBgAnimation;
+		fill-mode: forwards;
+		duration: 350ms;
+	}
+
+	background: {
+		image: url("../../../images/header_bg.png");
+	    position-y: -260px;
+	    position-x: center;
+	    repeat: no-repeat;
+	}
+}
+@keyframes headerBgAnimation {
+    to {background-position-y: 0px;}
 }
 .div-container {
 }
 .div-header {
 	grid-area: header;
-	background-color:red;
 	z-index: 1000;
+	height: 260px;
 }
 .div-headerbar {
 	grid-area: headerbar;
@@ -141,19 +158,21 @@ a {
 }
 .div-headerbar>.div-menu-item .div-menu-item-child-container {
 	position:absolute;
-	top:-20em;
 	max-width:260px;
+	top:-1em;
+	opacity:0;
 	@include prefix((
 		transition: ease_350ms_all
 	), webkit moz o);
 
 	&.visible {
+		opacity:1;
 		top:3em;
 	}
 
 }
 
-.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container {
+.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div {
 	background:white;
 	padding:5px;
 	box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
@@ -221,15 +240,12 @@ a {
 
 .div-sidebar {
 	grid-area: sidebar;
-	background-color:green;
 }
 .div-maincontent {
 	grid-area: maincontent;
-	background-color:red;
 }
 .div-footer {
 	grid-area: footer;
-	background-color:blue;
 }
 
 

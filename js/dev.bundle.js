@@ -12485,7 +12485,7 @@ function verifyPlainObject(value, displayName, methodName) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Note = exports.Blurb = exports.Link = exports.MenuItemChildContainer = undefined;
+exports.Note = exports.Blurb = exports.Link = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -12509,6 +12509,8 @@ var _reactRedux = __webpack_require__(98);
 
 var _mainMenuActions = __webpack_require__(232);
 
+var _contentActions = __webpack_require__(233);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12530,15 +12532,7 @@ function MainContainer() {
 }
 
 function Header() {
-    return _react2.default.createElement(
-        DivContainer,
-        { classes: "div-header" },
-        _react2.default.createElement(
-            "div",
-            null,
-            "header"
-        )
-    );
+    return _react2.default.createElement(DivContainer, { classes: "div-header" });
 }
 
 var HeaderBar = (_dec = (0, _reactRedux.connect)(function (store) {
@@ -12565,13 +12559,20 @@ var HeaderBar = (_dec = (0, _reactRedux.connect)(function (store) {
             var mainMenuItems = this.props.mainMenuItems;
 
 
-            console.log(mainMenuItems);
-
             var menuItems = mainMenuItems.map(function (item) {
+                var children = void 0;
+                if (item.children) {
+                    children = _react2.default.createElement(
+                        MenuItemChildContainer,
+                        { width: item.width },
+                        item.children
+                    );
+                }
+
                 return _react2.default.createElement(
                     MenuItem,
                     { id: item.id, key: item.id, label: item.text },
-                    item.children
+                    children
                 );
             });
 
@@ -12588,7 +12589,7 @@ var HeaderBar = (_dec = (0, _reactRedux.connect)(function (store) {
 }(_react2.default.Component)) || _class);
 var MainContent = (_dec2 = (0, _reactRedux.connect)(function (store) {
     return {
-        mainMenuItems: store.mainMenuItems.mainMenuItems
+        content: store.content.content
     };
 }), _dec2(_class2 = function (_React$Component2) {
     _inherits(MainContent, _React$Component2);
@@ -12602,18 +12603,46 @@ var MainContent = (_dec2 = (0, _reactRedux.connect)(function (store) {
     _createClass(MainContent, [{
         key: "componentWillMount",
         value: function componentWillMount() {
-            this.props.dispatch((0, _mainMenuActions.fetchMainMenuItems)());
+            this.props.dispatch((0, _contentActions.fetchContent)());
         }
     }, {
         key: "render",
         value: function render() {
+            var content = this.props.content;
+
+
             return _react2.default.createElement(
                 DivContainer,
                 { classes: "div-maincontent" },
                 _react2.default.createElement(
                     "div",
                     null,
-                    "maincontent"
+                    content.id
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    content.title
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    content.excerpt
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    content.body
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    content.date
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    content.author
                 )
             );
         }
@@ -12703,6 +12732,7 @@ var MenuItem = function (_React$Component3) {
                 var childContainer = event.target.nextSibling;
 
                 childContainer.style.left = 0 - childContainer.offsetWidth / 2 + thisElement.offsetWidth / 2 + "px";
+                //childContainer.style.top = (0 - (childContainer.offsetHeight + 260 )) + "px";
 
                 this.setState(function (prevState) {
                     var newState = !prevState.showChildren;
@@ -12800,7 +12830,6 @@ var MenuItemChildContainer = function (_React$Component4) {
     return MenuItemChildContainer;
 }(_react2.default.Component);
 
-exports.MenuItemChildContainer = MenuItemChildContainer;
 exports.Link = Link;
 exports.Blurb = Blurb;
 exports.Note = Note;
@@ -26214,7 +26243,7 @@ function fetchMainMenuItems() {
     return {
         type: "FETCH_MAIN_MENU_ITEMS_FULFILLED",
         payload: [{ id: "menuItem_1", text: "Home" }, { id: "menuItem_2", text: "Meu Perfil" }, { id: "menuItem_3", text: "Artigos e Notícias" }, { id: "menuItem_4", text: "Seminários" }, { id: "menuItem_5", text: "Consultas", children: [React.createElement(
-                _main.MenuItemChildContainer,
+                "div",
                 { key: "menuItem_5-inner" },
                 React.createElement(
                     _main.Link,
@@ -26227,8 +26256,8 @@ function fetchMainMenuItems() {
                     " Hipnoterapia "
                 )
             )] }, { id: "menuItem_6", text: "Locais de Trabalho", children: [React.createElement(
-                _main.MenuItemChildContainer,
-                { width: "230px", key: "menuItem_6-inner" },
+                "div",
+                { key: "menuItem_6-inner" },
                 React.createElement(
                     _main.Blurb,
                     null,
@@ -26304,7 +26333,7 @@ function fetchMainMenuItems() {
                     " isacosta1963@gmail.com "
                 )
             )] }, { id: "menuItem_7", text: "Parceiros", children: [React.createElement(
-                _main.MenuItemChildContainer,
+                "div",
                 { key: "menuItem_7-inner" },
                 React.createElement(
                     _main.Link,
@@ -26332,8 +26361,8 @@ function fetchMainMenuItems() {
                     "Equil\xEDbrio Hol\xEDstico"
                 )
             )] }, { id: "menuItem_8", text: "Reflexões", children: [React.createElement(
-                _main.MenuItemChildContainer,
-                { width: "230px", key: "menuItem_8-inner" },
+                "div",
+                { key: "menuItem_8-inner" },
                 React.createElement(
                     _main.Note,
                     null,
@@ -26355,6 +26384,31 @@ function fetchMainMenuItems() {
                     "Reflex\xE3o \"Girassol\""
                 )
             )] }]
+    };
+}
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.fetchContent = fetchContent;
+function fetchContent() {
+    return {
+        type: "FETCH_CONTENT_FULFILLED",
+        payload: {
+            id: 1,
+            title: "This is a news item",
+            excerpt: "This will show up as an excerpt to show as a headline or a single introductory paragraph.",
+            body: "This is the actual body. Here comes lorem ipsum goodness! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            date: "2017-06-20 16:38:22",
+            author: "Pedro Lucas Ferreira"
+        }
     };
 }
 
