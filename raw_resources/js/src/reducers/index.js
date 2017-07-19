@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import mainMenu from "./mainMenuReducer";
+import mainMenuItems from "./mainMenuItemsReducer";
+import content from "./contentReducer";
 
 export default combineReducers({
-    mainMenu
+    mainMenuItems,
+    content
 });

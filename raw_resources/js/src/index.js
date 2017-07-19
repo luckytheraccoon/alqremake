@@ -1,45 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store";
 import MainContainer from "./components/main";
-import { fetchMainMenu } from "./actions/menuActions";
 
-
-@connect((store)=>{
-    return {
-        user: store.user.user,
-        userFetched: store.user.fetched,
-        tweets: store.tweets.tweets
-    };
-})
-export default class MainApp extends React.Component {
-    componentWillMount() {
-        this.props.dispatch(fetchUser());
-    }
-
-    fetchTweets() {
-        this.props.dispatch(fetchTweets());
-    }
+class MainApp extends React.Component {
 
     render() {
-      /*  const { user, tweets } = this.props;
-
-        if(!tweets.length) {
-            return <button onClick={this.fetchTweets.bind(this)} > Load twits </button>;
-        }*/
-
         return (
             <MainContainer />
         );
     }
 }
-
-
-
-
-
 
 ReactDOM.render(
     <Provider store={store}> 
