@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import MainContainer from "./components/main";
+require("../../../css/main.css");
 
 class MainApp extends React.Component {
 
