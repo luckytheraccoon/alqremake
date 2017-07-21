@@ -144,27 +144,27 @@ class MenuItem extends React.Component {
 
     handleClick(event) {
 
-        if (this.props.children) {
-            
-            let thisElement = event.target;
-            let childContainer = event.target.nextSibling;
+        let thisElement = event.target;
 
-            childContainer.style.left = (0-(childContainer.offsetWidth/2)) + (thisElement.offsetWidth/2) + "px";
-            //childContainer.style.top = (0 - (childContainer.offsetHeight + 260 )) + "px";
+        this.setState(function (prevState) {
+            let newState = !prevState.showChildren;
 
-            this.setState(function (prevState) {
-                let newState = !prevState.showChildren;
-
-                if(newState) {
-                    document.addEventListener("click", this.handleClickOutside, true);
+            if (this.props.children) {
+                if(thisElement.nextSibling) {
+                    let childContainer = thisElement.nextSibling;
+                    childContainer.style.left = -130 + (thisElement.offsetWidth/2) + "px";
                 }
+            }
 
-                return {
-                    showChildren: !prevState.showChildren
-                };
-            });
-            
-        }
+            if(newState) {
+                document.addEventListener("click", this.handleClickOutside, true);
+            }
+
+            return {
+                showChildren: newState
+            };
+        });
+        
     }
 
     handleClickOutside(event) {
@@ -194,8 +194,8 @@ class MenuItem extends React.Component {
         }
         
         return (
-            <div className="div-menu-item" onClick={this.handleClick}>
-                <div className={buttonClass} data-text={this.props.label}>
+            <div className="div-menu-item">
+                <div className={buttonClass} onClick={this.handleClick} data-text={this.props.label}>
                     {this.props.label}
                 </div>
                 {children}

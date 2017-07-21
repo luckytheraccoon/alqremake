@@ -91,7 +91,6 @@ a {
 }
 .div-header {
 	grid-area: header;
-	z-index: 1000;
 	height: 260px;
 }
 .div-headerbar {
@@ -100,7 +99,6 @@ a {
 }
 .div-headerbar-across {
 	position:absolute;
-	z-index: 1000;
 	height: 2.6em;
 	width: 100%;
 	background: linear-gradient(to right,#272847 0,rgba(39,40,71,0.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);
@@ -113,7 +111,6 @@ a {
 	margin-left: 0.7em;
 }
 .div-headerbar>.div-menu-item>.div-menu-item-button {
-	z-index: 1000;
     overflow: hidden;
 	display:inline-block;
 	padding: 0 10px;
@@ -157,14 +154,16 @@ a {
 }
 .div-headerbar>.div-menu-item .div-menu-item-child-container {
 	position:absolute;
-	max-width:260px;
-	top:-1em;
+	width:260px;
+	top:5em;
 	opacity:0;
+	transform: scale(0);
 	@include prefix((
-		transition: ease_350ms_all
+		transition: ease_350ms_all-ease_50ms_transform
 	), webkit moz o);
 
 	&.visible {
+		transform: scale(1);
 		opacity:1;
 		top:3em;
 	}
@@ -179,6 +178,8 @@ a {
 	font-size:0.9em;
 
 	&>a.link {
+		position:relative;
+		overflow:hidden;
 		cursor:pointer;
 		display: block;
 		padding: 10px;
@@ -188,9 +189,23 @@ a {
 		border-width: 1px;
 		border-style: solid;
 		border-bottom-width:0;
+		transform: perspective(1px) translateZ(0);
 
-		&:hover { 
+		&:hover:before { 
+		    transform:scale(0);
+		}
+
+		&:before{
+		    content: "";
+		    position: absolute;
+		    top: 0; left: 0; right: 0; bottom: 0;
 			background: #f1f1f1;
+		    transform:scale(2);
+		    border-radius:100%;
+		    z-index:-1;
+			@include prefix((
+				transition: ease_500ms_all
+			), webkit moz o);
 		}
 	}
 

@@ -12726,26 +12726,26 @@ var MenuItem = function (_React$Component3) {
         key: "handleClick",
         value: function handleClick(event) {
 
-            if (this.props.children) {
+            var thisElement = event.target;
 
-                var thisElement = event.target;
-                var childContainer = event.target.nextSibling;
+            this.setState(function (prevState) {
+                var newState = !prevState.showChildren;
 
-                childContainer.style.left = 0 - childContainer.offsetWidth / 2 + thisElement.offsetWidth / 2 + "px";
-                //childContainer.style.top = (0 - (childContainer.offsetHeight + 260 )) + "px";
-
-                this.setState(function (prevState) {
-                    var newState = !prevState.showChildren;
-
-                    if (newState) {
-                        document.addEventListener("click", this.handleClickOutside, true);
+                if (this.props.children) {
+                    if (thisElement.nextSibling) {
+                        var childContainer = thisElement.nextSibling;
+                        childContainer.style.left = -130 + thisElement.offsetWidth / 2 + "px";
                     }
+                }
 
-                    return {
-                        showChildren: !prevState.showChildren
-                    };
-                });
-            }
+                if (newState) {
+                    document.addEventListener("click", this.handleClickOutside, true);
+                }
+
+                return {
+                    showChildren: newState
+                };
+            });
         }
     }, {
         key: "handleClickOutside",
@@ -12779,10 +12779,10 @@ var MenuItem = function (_React$Component3) {
 
             return _react2.default.createElement(
                 "div",
-                { className: "div-menu-item", onClick: this.handleClick },
+                { className: "div-menu-item" },
                 _react2.default.createElement(
                     "div",
-                    { className: buttonClass, "data-text": this.props.label },
+                    { className: buttonClass, onClick: this.handleClick, "data-text": this.props.label },
                     this.props.label
                 ),
                 children
@@ -12841,17 +12841,7 @@ exports.Note = Note;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () {
-    function defineProperties(target, props) {
-        for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-        }
-    }return function (Constructor, protoProps, staticProps) {
-        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-    };
-}();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(26);
 
@@ -12871,27 +12861,13 @@ var _main = __webpack_require__(108);
 
 var _main2 = _interopRequireDefault(_main);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-    }
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) {
-    if (!self) {
-        throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-}
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-        throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-    }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 __webpack_require__(234);
 
@@ -12914,7 +12890,11 @@ var MainApp = function (_React$Component) {
     return MainApp;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(_reactRedux.Provider, { store: _store2.default }, _react2.default.createElement(MainApp, null)), document.getElementById("root"));
+_reactDom2.default.render(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: _store2.default },
+    _react2.default.createElement(MainApp, null)
+), document.getElementById("root"));
 
 /*
 store.dispatch({
@@ -26454,7 +26434,7 @@ exports = module.exports = __webpack_require__(236)(undefined);
 
 
 // module
-exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a:link,a:visited{color:#317795;text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;grid-template-columns:[margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;grid-template-rows:[header] 200px [headerbar] 2.6em [body] auto [footer] auto;grid-template-areas:\". header header .\" \". headerbar headerbar .\" \". sidebar maincontent .\" \". footer footer .\";width:100%;height:100%;min-width:1045px;animation-name:headerBgAnimation;animation-fill-mode:forwards;animation-duration:350ms;background-image:url(" + __webpack_require__(237) + ");background-position-y:-260px;background-position-x:center;background-repeat:no-repeat}@keyframes headerBgAnimation{to{background-position-y:0}}.div-header{grid-area:header;z-index:1000;height:260px}.div-headerbar{grid-area:headerbar;position:relative}.div-headerbar-across{position:absolute;z-index:1000;height:2.6em;width:100%;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px}.div-headerbar>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em}.div-headerbar>.div-menu-item>.div-menu-item-button{z-index:1000;overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-menu-item>.div-menu-item-button:before{content:attr(data-text);position:absolute;top:-2em}.div-headerbar>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}.div-headerbar>.div-menu-item .div-menu-item-child-container{position:absolute;max-width:260px;top:-1em;opacity:0;-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all}.div-headerbar>.div-menu-item .div-menu-item-child-container.visible{opacity:1;top:3em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover{background:#f1f1f1}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{grid-area:maincontent}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}", ""]);
+exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a:link,a:visited{color:#317795;text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;grid-template-columns:[margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;grid-template-rows:[header] 200px [headerbar] 2.6em [body] auto [footer] auto;grid-template-areas:\". header header .\" \". headerbar headerbar .\" \". sidebar maincontent .\" \". footer footer .\";width:100%;height:100%;min-width:1045px;animation-name:headerBgAnimation;animation-fill-mode:forwards;animation-duration:350ms;background-image:url(" + __webpack_require__(237) + ");background-position-y:-260px;background-position-x:center;background-repeat:no-repeat}@keyframes headerBgAnimation{to{background-position-y:0}}.div-header{grid-area:header;height:260px}.div-headerbar{grid-area:headerbar;position:relative}.div-headerbar-across{position:absolute;height:2.6em;width:100%;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px}.div-headerbar>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em}.div-headerbar>.div-menu-item>.div-menu-item-button{overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-menu-item>.div-menu-item-button:before{content:attr(data-text);position:absolute;top:-2em}.div-headerbar>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}.div-headerbar>.div-menu-item .div-menu-item-child-container{position:absolute;width:260px;top:5em;opacity:0;transform:scale(0);-webkit-transition:ease 350ms all,ease 50ms transform;-moz-transition:ease 350ms all,ease 50ms transform;-o-transition:ease 350ms all,ease 50ms transform;transition:ease 350ms all,ease 50ms transform}.div-headerbar>.div-menu-item .div-menu-item-child-container.visible{transform:scale(1);opacity:1;top:3em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{position:relative;overflow:hidden;cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;transform:perspective(1px) translateZ(0)}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover:before{transform:scale(0)}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:before{content:\"\";position:absolute;top:0;left:0;right:0;bottom:0;background:#f1f1f1;transform:scale(2);border-radius:100%;z-index:-1;-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{grid-area:maincontent}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}", ""]);
 
 // exports
 
