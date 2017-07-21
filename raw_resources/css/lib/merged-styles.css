@@ -105,18 +105,18 @@ a:hover {
 .div-headerbar > .div-menu-item .div-menu-item-child-container {
   position: absolute;
   width: 260px;
-  top: 5em;
+  top: 4em;
   opacity: 0;
-  transform: scale(0);
-  -webkit-transition: ease 350ms all,ease 50ms transform;
-  -moz-transition: ease 350ms all,ease 50ms transform;
-  -o-transition: ease 350ms all,ease 50ms transform;
-  transition: ease 350ms all,ease 50ms transform
+  transform: scale(.9);
+  -webkit-transition: ease 350ms all;
+  -moz-transition: ease 350ms all;
+  -o-transition: ease 350ms all;
+  transition: ease 350ms all
 }
 .div-headerbar > .div-menu-item .div-menu-item-child-container.visible {
   transform: scale(1);
   opacity: 1;
-  top: 3em
+  top: 2.5em
 }
 .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div {
   background: #fff;
@@ -138,10 +138,10 @@ a:hover {
   border-style: solid;
   border-bottom-width: 0;
   transform: perspective(1px) translateZ(0);
-  -webkit-transition: ease .2s all;
-  -moz-transition: ease .2s all;
-  -o-transition: ease .2s all;
-  transition: ease .2s all
+  -webkit-transition: ease .5s all;
+  -moz-transition: ease .5s all;
+  -o-transition: ease .5s all;
+  transition: ease .5s all
 }
 .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover {
   font-weight: 700;

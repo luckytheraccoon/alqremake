@@ -98,17 +98,17 @@ a:hover, a:focus {
 .div-headerbar > .div-menu-item .div-menu-item-child-container {
   position: absolute;
   width: 260px;
-  top: 5em;
+  top: 4em;
   opacity: 0;
-  transform: scale(0);
-  -webkit-transition: ease 350ms all,ease 50ms transform;
-  -moz-transition: ease 350ms all,ease 50ms transform;
-  -o-transition: ease 350ms all,ease 50ms transform;
-  transition: ease 350ms all,ease 50ms transform; }
+  transform: scale(0.9);
+  -webkit-transition: ease 350ms all;
+  -moz-transition: ease 350ms all;
+  -o-transition: ease 350ms all;
+  transition: ease 350ms all; }
   .div-headerbar > .div-menu-item .div-menu-item-child-container.visible {
     transform: scale(1);
     opacity: 1;
-    top: 3em; }
+    top: 2.5em; }
 
 .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div {
   background: white;
@@ -129,10 +129,10 @@ a:hover, a:focus {
     border-style: solid;
     border-bottom-width: 0;
     transform: perspective(1px) translateZ(0);
-    -webkit-transition: ease 200ms all;
-    -moz-transition: ease 200ms all;
-    -o-transition: ease 200ms all;
-    transition: ease 200ms all; }
+    -webkit-transition: ease 500ms all;
+    -moz-transition: ease 500ms all;
+    -o-transition: ease 500ms all;
+    transition: ease 500ms all; }
     .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover {
       font-weight: bold;
       text-indent: 10px;
