@@ -1,45 +1,83 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { connect } from "react-redux";
-import { fetchMainMenuItems } from "../actions/mainMenuActions";
-import { fetchContent } from "../actions/contentActions";
+import mainMenuItems from "../data/mainMenu";
+import fetchMainContent from "../data/mainContent";
 
-export default function MainContainer() {
-    return (
-        <div className="div-main">
-            <Header />
-            <HeaderBar />
-            <Sidebar />
-            <MainContent />
-            <Footer />
-        </div>
-    );
+
+class MainContainer extends React.PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.changeContent = this.changeContent.bind(this);
+        this.state = {contentId:null};
+    }
+
+    changeContent(newContentId) {
+        if(newContentId != this.state.contentId) {
+            this.setState({contentId:newContentId});
+        }
+    }
+
+    render() {
+        return (
+            <div className="div-main">
+                <Header />
+                <HeaderBar changeContentAction={this.changeContent} />
+                <Sidebar />
+                <MainContent contentId={this.state.contentId} />
+                <Footer />
+            </div>
+        );
+    }
 }
 
 function Header() {
     return (
-        <DivContainer classes="div-header" />
+        <DivContainer classes="div-header">
+            <div className="div-header-images-1"></div>
+            <div className="div-header-images-2"></div>
+            <div className="div-header-images-3"></div>
+            <div className="div-header-images-4"></div>
+            <div className="div-header-images-5"></div>
+            <div className="div-header-images-6"></div>
+            <div className="div-header-images-7"></div>
+        </DivContainer>
     );
 }
 
+class InnerLink extends React.PureComponent {
 
-@connect((store)=>{
-    return {
-        mainMenuItems: store.mainMenuItems.mainMenuItems
-    };
-})
-class HeaderBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+    
+    handleClick() {
+        this.props.clickAction(this.props.contentId);
+    }
 
-    componentWillMount() {
-        this.props.dispatch(fetchMainMenuItems());
+    render() {
+        return (
+            <a onClick={this.handleClick} className="link">{this.props.children}</a>
+        );
+    }
+}
+
+class HeaderBar extends React.PureComponent {
+    
+    constructor(props) {
+        super(props);
+        this.changeContentAction = this.changeContentAction.bind(this);
+    }
+
+    changeContentAction(contentId) {
+        this.props.changeContentAction(contentId);
     }
 
     render() {
 
-        const { mainMenuItems } = this.props;
-
-        const menuItems = mainMenuItems.map((item) => {
+        const menuItems = mainMenuItems(this.changeContentAction).map((item) => {
             let children;
             if(item.children) {
                 children = (
@@ -50,7 +88,7 @@ class HeaderBar extends React.Component {
             }
             
             return(    
-                <MenuItem id={item.id} key={item.id} label={item.text}>
+                <MenuItem contentId={item.contentId} changeContentAction={this.changeContentAction} id={item.id} key={item.id} label={item.text}>
                     {children}
                 </MenuItem>
             );
@@ -58,39 +96,37 @@ class HeaderBar extends React.Component {
 
         return (
             <DivContainer classes="div-headerbar">
-                <div className='div-headerbar-across'></div>
+                <div className="div-headerbar-across"></div>
                 {menuItems}
             </DivContainer>
         );
     }
 }
 
-@connect((store)=>{
-    return {
-        content: store.content.content
-    };
-})
-class MainContent extends React.Component {
-
-    componentWillMount() {
-        this.props.dispatch(fetchContent());
+class MainContent extends React.PureComponent {
+    
+    constructor(props) {
+        super(props);
     }
 
     render() {
-
-        const { content } = this.props;
-
+        let contentComp;
+        if(this.props.contentId) {
+            contentComp = <MainContentItem contentData={fetchMainContent(this.props.contentId)} />;
+        }
+  
         return (
             <DivContainer classes="div-maincontent">
-                <div>{content.id}</div>
-                <div>{content.title}</div>
-                <div>{content.excerpt}</div>
-                <div>{content.body}</div>
-                <div>{content.date}</div>
-                <div>{content.author}</div>
+                {contentComp}
             </DivContainer>
         );
     }
+}
+function MainContentItem(props) {
+    let content = props.contentData;
+    return (
+        <div>{content.id} {content.title}</div>
+    );
 }
 function Sidebar() {
     return (
@@ -116,23 +152,23 @@ function DivContainer(props) {
     className = className + "div-container";
     return <div className={className}>{props.children}</div>;
 }
-function Link(props) {
+function Alink(props) {
     return (
-        <a href={props.url} className='link'>{props.children}</a>
+        <a href={props.url} className="link">{props.children}</a>
     );
 }
 function Blurb(props) {
     return (
-        <div className='blurb'>{props.children}</div>
+        <div className="blurb">{props.children}</div>
     );
 }
 function Note(props) {
     return (
-        <div className='note'>{props.children}</div>
+        <div className="note">{props.children}</div>
     );
 }
 
-class MenuItem extends React.Component {
+class MenuItem extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -141,8 +177,12 @@ class MenuItem extends React.Component {
         this.state = {showChildren:false};
     }
 
-
     handleClick(event) {
+
+        if(this.props.contentId) {
+            this.props.changeContentAction(this.props.contentId);
+            return;
+        }
 
         let thisElement = event.target;
 
@@ -153,6 +193,8 @@ class MenuItem extends React.Component {
                 if(thisElement.nextSibling) {
                     let childContainer = thisElement.nextSibling;
                     childContainer.style.left = -130 + (thisElement.offsetWidth/2) + "px";
+                    childContainer.style.position = "relative";
+                    childContainer.style.display = "block";
                 }
             }
 
@@ -170,7 +212,7 @@ class MenuItem extends React.Component {
     handleClickOutside(event) {
         const domNode = ReactDOM.findDOMNode(this);
 
-        if ((!domNode || !domNode.contains(event.target))) {
+        if ((!domNode || !domNode.contains(event.target)) || event.target.tagName === "A") {
             document.removeEventListener("click", this.handleClickOutside, true);
             this.setState({showChildren: false});
         }
@@ -179,44 +221,35 @@ class MenuItem extends React.Component {
     render() {
 
         let buttonClass = "div-menu-item-button noselect";
-        let children = <span/>;
+        let children;
 
         if(this.state.showChildren) {
+            children = this.props.children;
             buttonClass += " selected";
         }
 
-        if(this.props.children) {
-            children = React.Children.map(this.props.children, child => {
-                return React.cloneElement(child, {
-                    visible: this.state.showChildren
-                });
-            });
-        }
         
         return (
             <div className="div-menu-item">
                 <div className={buttonClass} onClick={this.handleClick} data-text={this.props.label}>
                     {this.props.label}
                 </div>
-                {children}
+
+                <ReactCSSTransitionGroup 
+                    transitionName="menuChildren" 
+                    transitionEnterTimeout={350} 
+                    transitionLeaveTimeout={350}>
+                    {children}
+                </ReactCSSTransitionGroup>
             </div>
         );
     }
 }
-class MenuItemChildContainer extends React.Component {
+class MenuItemChildContainer extends React.PureComponent {
 
     render() {
-
-        let classes = "div-menu-item-child-container";
-
-        if(this.props.visible) {
-            classes += " visible";
-        }
-
-        let style = {width:this.props.width};
-
         return (
-            <div style={style} className={classes}>
+            <div className="div-menu-item-child-container">
                 <div className="div-inner-container">
                     {this.props.children}
                     {this.props.loggedIn}
@@ -226,4 +259,5 @@ class MenuItemChildContainer extends React.Component {
     }
 }
 
-export { Link, Blurb, Note };
+
+export { MainContainer, Alink, Blurb, Note, InnerLink };

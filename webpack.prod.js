@@ -5,7 +5,7 @@ module.exports = {
       rules: [
         { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader",
           query: {
-            presets: ["es2015","env","react"],
+            presets: ["airbnb", "es2015", "stage-0","env","react"],
             plugins: ["transform-object-rest-spread","transform-decorators-legacy"]
           } 
         },
