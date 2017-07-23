@@ -12,9 +12,12 @@ html {
   width: 100%;
   height: 100%
 }
+a {
+  cursor: pointer;
+  color: #317795
+}
 a:link,
 a:visited {
-  color: #317795;
   text-decoration: none;
   font-weight: 400
 }
@@ -24,8 +27,8 @@ a:hover {
 }
 .div-main {
   display: grid;
-  grid-template-columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
-  grid-template-rows: [header] 207px [headerbar] 2.6em [body] auto [footer] auto;
+  grid-template-columns: [margin-left] 15% [col1] 210px [col2] auto [margin-right] 15%;
+  grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
   grid-template-areas: ". header header ." ". headerbar headerbar ." ". sidebar maincontent ." ". footer footer .";
   width: 100%;
   height: 100%;
@@ -177,6 +180,10 @@ a:hover {
   grid-area: headerbar;
   position: relative
 }
+.div-maincontent {
+  grid-area: maincontent;
+  position: relative
+}
 .div-headerbar-across {
   position: absolute;
   height: 2.6em;
@@ -250,7 +257,8 @@ a:hover {
 .div-headerbar > .div-menu-item .div-menu-item-child-container {
   position: absolute;
   width: 260px;
-  top: .5em
+  top: .5em;
+  z-index: 1
 }
 .div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div {
   background: #fff;
@@ -332,7 +340,26 @@ a:hover {
   grid-area: sidebar
 }
 .div-maincontent {
+  width: 870px;
   grid-area: maincontent
+}
+.div-maincontent > div {
+  padding: 15px 0;
+  border-bottom: 4px dotted #f1f1f1
+}
+.div-maincontent > div > div {
+  margin: 5px 0
+}
+.div-maincontent > div > div.title {
+  font-size: 1.5em
+}
+.div-maincontent > div > div.intro {
+  margin: 15px 0
+}
+.div-maincontent > div > div.date {
+  color: #888;
+  font-size: .9em;
+  border-bottom: 1px solid #f1f1f1
 }
 .div-footer {
   grid-area: footer

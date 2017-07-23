@@ -2,14 +2,14 @@ import React from "react";
 import {InnerLink, Alink, Blurb, Note} from "../components/main";
 export default (contentChangeAction) => {
 
-	return [{id:"menuItem_1", text: "Home", contentId:3},
-            {id:"menuItem_2", text: "Meu Perfil"},
-            {id:"menuItem_3", text: "Artigos e Notícias"},
-            {id:"menuItem_4", text: "Seminários"},
+	return [{id:"menuItem_1", text: "Home", contentId:"home"},
+            {id:"menuItem_2", text: "Meu Perfil", contentId:1},
+            {id:"menuItem_3", text: "Artigos e Notícias", contentId:2},
+            {id:"menuItem_4", text: "Seminários", contentId:3},
             {id:"menuItem_5", text: "Consultas", children: [
                 <div key="menuItem_5-inner">
-                    <InnerLink clickAction={contentChangeAction} contentId="1"> Aconselhamento Alimentar </InnerLink>
-                    <InnerLink clickAction={contentChangeAction} contentId="2"> Hipnoterapia </InnerLink>
+                    <InnerLink clickAction={contentChangeAction} contentId="4"> Aconselhamento Alimentar </InnerLink>
+                    <InnerLink clickAction={contentChangeAction} contentId="5"> Hipnoterapia </InnerLink>
                 </div>
             ]},
             {id:"menuItem_6", text: "Locais de Trabalho", children: [
@@ -27,7 +27,7 @@ export default (contentChangeAction) => {
                     <Alink url="http://leitedaterra.blogspot.pt/">Leite Da Terra</Alink>
                     <Alink url="http://www.biovivos.pt/">BioVivos</Alink>
                     <Alink url="http://www.facebook.com/loveingreenjuicers">Love In Green</Alink>
-                    <Alink url="http://alquimiaalimentar.com/index.php?option=com_content&amp;task=view&amp;id=381">Equilíbrio Holístico</Alink>
+                    <InnerLink clickAction={contentChangeAction} contentId="6"> Equilíbrio Holístico </InnerLink>
                 </div>
             ]},
             {id:"menuItem_8", text: "Reflexões", children: [

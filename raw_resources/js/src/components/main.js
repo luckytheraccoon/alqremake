@@ -4,13 +4,12 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import mainMenuItems from "../data/mainMenu";
 import fetchMainContent from "../data/mainContent";
 
-
 class MainContainer extends React.PureComponent {
 
     constructor(props) {
         super(props);
         this.changeContent = this.changeContent.bind(this);
-        this.state = {contentId:null};
+        this.state = {contentId:"home"};
     }
 
     changeContent(newContentId) {
@@ -25,7 +24,7 @@ class MainContainer extends React.PureComponent {
                 <Header />
                 <HeaderBar changeContentAction={this.changeContent} />
                 <Sidebar />
-                <MainContent contentId={this.state.contentId} />
+                <MainContent changeContentAction={this.changeContent} contentId={this.state.contentId} />
                 <Footer />
             </div>
         );
@@ -110,11 +109,18 @@ class MainContent extends React.PureComponent {
     }
 
     render() {
-        let contentComp;
-        if(this.props.contentId) {
-            contentComp = <MainContentItem contentData={fetchMainContent(this.props.contentId)} />;
+        let contentComp = [];
+
+        switch(this.props.contentId) {
+            case "home":
+                for (var i = 0; i < 6; i++) {
+                    contentComp.push(<MainContentItem key={i} contentChangeAction={this.props.changeContentAction} contentData={fetchMainContent(i)} />);
+                }
+                break;
+            default:
+                contentComp.push(<MainContentItem key={this.props.contentId} contentChangeAction={this.props.changeContentAction} contentData={fetchMainContent(this.props.contentId)} />);
         }
-  
+
         return (
             <DivContainer classes="div-maincontent">
                 {contentComp}
@@ -124,8 +130,14 @@ class MainContent extends React.PureComponent {
 }
 function MainContentItem(props) {
     let content = props.contentData;
+    let contentChangeAction = props.contentChangeAction;
     return (
-        <div>{content.id} {content.title}</div>
+        <div>
+            <div className="title"><InnerLink clickAction={contentChangeAction} contentId={content.id}>{content.title}</InnerLink></div>
+            <div className="date">{content.date}</div>
+            <div className="intro">{content.intro}</div>
+            <div className="readMoreLink"><InnerLink clickAction={contentChangeAction} contentId={content.id}>Ler Mais</InnerLink></div>
+        </div>
     );
 }
 function Sidebar() {
@@ -179,7 +191,7 @@ class MenuItem extends React.PureComponent {
 
     handleClick(event) {
 
-        if(this.props.contentId) {
+        if(typeof this.props.contentId == "number" || typeof this.props.contentId == "string") {
             this.props.changeContentAction(this.props.contentId);
             return;
         }

@@ -11544,7 +11544,7 @@ var MainContainer = function (_React$PureComponent) {
         var _this = _possibleConstructorReturn(this, (MainContainer.__proto__ || Object.getPrototypeOf(MainContainer)).call(this, props));
 
         _this.changeContent = _this.changeContent.bind(_this);
-        _this.state = { contentId: null };
+        _this.state = { contentId: "home" };
         return _this;
     }
 
@@ -11564,7 +11564,7 @@ var MainContainer = function (_React$PureComponent) {
                 _react2.default.createElement(Header, null),
                 _react2.default.createElement(HeaderBar, { changeContentAction: this.changeContent }),
                 _react2.default.createElement(Sidebar, null),
-                _react2.default.createElement(MainContent, { contentId: this.state.contentId }),
+                _react2.default.createElement(MainContent, { changeContentAction: this.changeContent, contentId: this.state.contentId }),
                 _react2.default.createElement(Footer, null)
             );
         }
@@ -11681,9 +11681,16 @@ var MainContent = function (_React$PureComponent4) {
     _createClass(MainContent, [{
         key: "render",
         value: function render() {
-            var contentComp = void 0;
-            if (this.props.contentId) {
-                contentComp = _react2.default.createElement(MainContentItem, { contentData: (0, _mainContent2.default)(this.props.contentId) });
+            var contentComp = [];
+
+            switch (this.props.contentId) {
+                case "home":
+                    for (var i = 0; i < 6; i++) {
+                        contentComp.push(_react2.default.createElement(MainContentItem, { key: i, contentChangeAction: this.props.changeContentAction, contentData: (0, _mainContent2.default)(i) }));
+                    }
+                    break;
+                default:
+                    contentComp.push(_react2.default.createElement(MainContentItem, { key: this.props.contentId, contentChangeAction: this.props.changeContentAction, contentData: (0, _mainContent2.default)(this.props.contentId) }));
             }
 
             return _react2.default.createElement(
@@ -11699,12 +11706,38 @@ var MainContent = function (_React$PureComponent4) {
 
 function MainContentItem(props) {
     var content = props.contentData;
+    var contentChangeAction = props.contentChangeAction;
     return _react2.default.createElement(
         "div",
         null,
-        content.id,
-        " ",
-        content.title
+        _react2.default.createElement(
+            "div",
+            { className: "title" },
+            _react2.default.createElement(
+                InnerLink,
+                { clickAction: contentChangeAction, contentId: content.id },
+                content.title
+            )
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "date" },
+            content.date
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "intro" },
+            content.intro
+        ),
+        _react2.default.createElement(
+            "div",
+            { className: "readMoreLink" },
+            _react2.default.createElement(
+                InnerLink,
+                { clickAction: contentChangeAction, contentId: content.id },
+                "Ler Mais"
+            )
+        )
     );
 }
 function Sidebar() {
@@ -11782,7 +11815,7 @@ var MenuItem = function (_React$PureComponent5) {
         key: "handleClick",
         value: function handleClick(event) {
 
-            if (this.props.contentId) {
+            if (typeof this.props.contentId == "number" || typeof this.props.contentId == "string") {
                 this.props.changeContentAction(this.props.contentId);
                 return;
             }
@@ -22914,17 +22947,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (contentChangeAction) {
 
-    return [{ id: "menuItem_1", text: "Home", contentId: 3 }, { id: "menuItem_2", text: "Meu Perfil" }, { id: "menuItem_3", text: "Artigos e Notícias" }, { id: "menuItem_4", text: "Seminários" }, { id: "menuItem_5", text: "Consultas", children: [_react2.default.createElement(
+    return [{ id: "menuItem_1", text: "Home", contentId: "home" }, { id: "menuItem_2", text: "Meu Perfil", contentId: 1 }, { id: "menuItem_3", text: "Artigos e Notícias", contentId: 2 }, { id: "menuItem_4", text: "Seminários", contentId: 3 }, { id: "menuItem_5", text: "Consultas", children: [_react2.default.createElement(
             "div",
             { key: "menuItem_5-inner" },
             _react2.default.createElement(
                 _main.InnerLink,
-                { clickAction: contentChangeAction, contentId: "1" },
+                { clickAction: contentChangeAction, contentId: "4" },
                 " Aconselhamento Alimentar "
             ),
             _react2.default.createElement(
                 _main.InnerLink,
-                { clickAction: contentChangeAction, contentId: "2" },
+                { clickAction: contentChangeAction, contentId: "5" },
                 " Hipnoterapia "
             )
         )] }, { id: "menuItem_6", text: "Locais de Trabalho", children: [_react2.default.createElement(
@@ -23028,9 +23061,9 @@ exports.default = function (contentChangeAction) {
                 "Love In Green"
             ),
             _react2.default.createElement(
-                _main.Alink,
-                { url: "http://alquimiaalimentar.com/index.php?option=com_content&task=view&id=381" },
-                "Equil\xEDbrio Hol\xEDstico"
+                _main.InnerLink,
+                { clickAction: contentChangeAction, contentId: "6" },
+                " Equil\xEDbrio Hol\xEDstico "
             )
         )] }, { id: "menuItem_8", text: "Reflexões", children: [_react2.default.createElement(
             "div",
@@ -23089,10 +23122,11 @@ exports.default = function (contentId) {
 
     return {
         id: contentToShow.id,
-        title: contentToShow.title,
-        excerpt: "This will show up as an excerpt to show as a headline or a single introductory paragraph.",
+        title: "Content Title " + contentToShow.id,
+        intro: "This will show up as an excerpt to show as a headline or a single introductory paragraph.",
         body: "This is the actual body. Here comes lorem ipsum goodness! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        date: "2017-06-20 16:38:22",
+        date: "20 Junho, 2017",
+        time: "16h30m",
         author: "Pedro Lucas Ferreira"
     };
 };
@@ -23137,7 +23171,7 @@ exports = module.exports = __webpack_require__(185)(undefined);
 
 
 // module
-exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a:link,a:visited{color:#317795;text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;grid-template-columns:[margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;grid-template-rows:[header] 207px [headerbar] 2.6em [body] auto [footer] auto;grid-template-areas:\". header header .\" \". headerbar headerbar .\" \". sidebar maincontent .\" \". footer footer .\";width:100%;height:100%;min-width:1045px}.div-header-images-1{position:absolute;top:-260px;left:0;background:url(" + __webpack_require__(18) + ") no-repeat center 0;width:100%;height:260px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image1Animation;animation-fill-mode:forwards;animation-duration:1.5s}@keyframes image1Animation{to{top:0}}.div-header-images-2{opacity:0;position:absolute;z-index:1;top:65px;left:20px;background:url(" + __webpack_require__(18) + ") no-repeat 0 -275px;width:307px;height:101px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image2Animation;animation-fill-mode:forwards;animation-duration:1.5s}@keyframes image2Animation{to{top:55px;opacity:1}}.div-header-images-3{opacity:.8;transform:scale(.8);position:absolute;top:5px;left:295px;background:url(" + __webpack_require__(18) + ") no-repeat -7px -389px;width:456px;height:249px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image3Animation;animation-fill-mode:forwards;animation-duration:2.35s}@keyframes image3Animation{to{opacity:1;transform:scale(.95)}}.div-header-images-4{opacity:.8;transform:scale(.9);position:absolute;top:145px;left:335px;background:url(" + __webpack_require__(18) + ") no-repeat -327px -271px;width:178px;height:25px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image4Animation;animation-fill-mode:forwards;animation-duration:1.35s}@keyframes image4Animation{to{opacity:1;transform:scale(1)}}.div-header-images-5{opacity:.8;transform:scale(.9);position:absolute;top:160px;left:375px;background:url(" + __webpack_require__(18) + ") no-repeat -328px -327px;width:579px;height:44px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image5Animation;animation-fill-mode:forwards;animation-duration:1.35s}@keyframes image5Animation{to{opacity:1;transform:scale(1)}}.div-header-images-6{opacity:0;transform:scale(.8);position:absolute;top:85px;left:975px;z-index:1;background:url(" + __webpack_require__(18) + ") no-repeat -485px -393px;width:204px;height:204px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image6Animation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes image6Animation{to{opacity:1;transform:scale(1)}}.div-header-images-7{transform:rotate(0);position:absolute;top:68px;left:962px;z-index:0;background:url(" + __webpack_require__(18) + ") no-repeat -709px -390px;width:235px;height:233px;animation-timing-function:linear;animation-name:image7Animation;animation-duration:12s;animation-iteration-count:infinite}@keyframes image7Animation{to{transform:rotate(360deg)}}.div-header{grid-area:header;height:260px;position:relative}.div-headerbar{grid-area:headerbar;position:relative}.div-headerbar-across{position:absolute;height:2.6em;width:0;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px;animation-timing-function:linear;animation-name:headerBarAcrossAnimation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes headerBarAcrossAnimation{to{width:100%}}.div-headerbar>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em}.div-headerbar>.div-menu-item>.div-menu-item-button{opacity:0;overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;animation-timing-function:linear;animation-name:buttonsAnimation;animation-fill-mode:forwards;animation-duration:350ms;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-menu-item>.div-menu-item-button:before{content:attr(data-text);position:absolute;top:-2em}.div-headerbar>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}@keyframes buttonsAnimation{to{opacity:1}}.div-headerbar>.div-menu-item .div-menu-item-child-container{position:absolute;width:260px;top:.5em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{position:relative;overflow:hidden;cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-radius:5px;border-width:0;border-bottom-width:1px;border-style:solid;transform:perspective(1px) translateZ(0);-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover{text-indent:10px;background:#fff}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover:before{left:-7px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:before{content:\"\";width:0;height:0;border-top:19px solid transparent;border-left:19px solid rgba(49,119,149,.5);border-bottom:19px solid transparent;position:absolute;top:-1px;left:-15px;right:0;bottom:0;-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{grid-area:maincontent}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.menuChildren{transform:scale(1);opacity:1;top:.5em}.menuChildren-enter{top:3em;opacity:0;transform:scale(.9)}.menuChildren-enter.menuChildren-enter-active{transform:scale(1);opacity:1;top:.5em;transition:350ms}.menuChildren-leave{transform:scale(1);opacity:1;top:.5em}.menuChildren-leave.menuChildren-leave-active{top:3em;opacity:0;transform:scale(.9);transition:350ms}", ""]);
+exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a{cursor:pointer;color:#317795}a:link,a:visited{text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;grid-template-columns:[margin-left] 15% [col1] 210px [col2] auto [margin-right] 15%;grid-template-rows:[header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;grid-template-areas:\". header header .\" \". headerbar headerbar .\" \". sidebar maincontent .\" \". footer footer .\";width:100%;height:100%;min-width:1045px}.div-header-images-1{position:absolute;top:-260px;left:0;background:url(" + __webpack_require__(18) + ") no-repeat center 0;width:100%;height:260px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image1Animation;animation-fill-mode:forwards;animation-duration:1.5s}@keyframes image1Animation{to{top:0}}.div-header-images-2{opacity:0;position:absolute;z-index:1;top:65px;left:20px;background:url(" + __webpack_require__(18) + ") no-repeat 0 -275px;width:307px;height:101px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image2Animation;animation-fill-mode:forwards;animation-duration:1.5s}@keyframes image2Animation{to{top:55px;opacity:1}}.div-header-images-3{opacity:.8;transform:scale(.8);position:absolute;top:5px;left:295px;background:url(" + __webpack_require__(18) + ") no-repeat -7px -389px;width:456px;height:249px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image3Animation;animation-fill-mode:forwards;animation-duration:2.35s}@keyframes image3Animation{to{opacity:1;transform:scale(.95)}}.div-header-images-4{opacity:.8;transform:scale(.9);position:absolute;top:145px;left:335px;background:url(" + __webpack_require__(18) + ") no-repeat -327px -271px;width:178px;height:25px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image4Animation;animation-fill-mode:forwards;animation-duration:1.35s}@keyframes image4Animation{to{opacity:1;transform:scale(1)}}.div-header-images-5{opacity:.8;transform:scale(.9);position:absolute;top:160px;left:375px;background:url(" + __webpack_require__(18) + ") no-repeat -328px -327px;width:579px;height:44px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image5Animation;animation-fill-mode:forwards;animation-duration:1.35s}@keyframes image5Animation{to{opacity:1;transform:scale(1)}}.div-header-images-6{opacity:0;transform:scale(.8);position:absolute;top:85px;left:975px;z-index:1;background:url(" + __webpack_require__(18) + ") no-repeat -485px -393px;width:204px;height:204px;animation-timing-function:cubic-bezier(.06,.13,.31,1.03);animation-name:image6Animation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes image6Animation{to{opacity:1;transform:scale(1)}}.div-header-images-7{transform:rotate(0);position:absolute;top:68px;left:962px;z-index:0;background:url(" + __webpack_require__(18) + ") no-repeat -709px -390px;width:235px;height:233px;animation-timing-function:linear;animation-name:image7Animation;animation-duration:12s;animation-iteration-count:infinite}@keyframes image7Animation{to{transform:rotate(360deg)}}.div-header{grid-area:header;height:260px;position:relative}.div-headerbar{grid-area:headerbar;position:relative}.div-maincontent{grid-area:maincontent;position:relative}.div-headerbar-across{position:absolute;height:2.6em;width:0;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px;animation-timing-function:linear;animation-name:headerBarAcrossAnimation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes headerBarAcrossAnimation{to{width:100%}}.div-headerbar>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em}.div-headerbar>.div-menu-item>.div-menu-item-button{opacity:0;overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;animation-timing-function:linear;animation-name:buttonsAnimation;animation-fill-mode:forwards;animation-duration:350ms;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-menu-item>.div-menu-item-button:before{content:attr(data-text);position:absolute;top:-2em}.div-headerbar>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}@keyframes buttonsAnimation{to{opacity:1}}.div-headerbar>.div-menu-item .div-menu-item-child-container{position:absolute;width:260px;top:.5em;z-index:1}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{position:relative;overflow:hidden;cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-radius:5px;border-width:0;border-bottom-width:1px;border-style:solid;transform:perspective(1px) translateZ(0);-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover{text-indent:10px;background:#fff}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover:before{left:-7px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:before{content:\"\";width:0;height:0;border-top:19px solid transparent;border-left:19px solid rgba(49,119,149,.5);border-bottom:19px solid transparent;position:absolute;top:-1px;left:-15px;right:0;bottom:0;-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{width:870px;grid-area:maincontent}.div-maincontent>div{padding:15px 0;border-bottom:4px dotted #f1f1f1}.div-maincontent>div>div{margin:5px 0}.div-maincontent>div>div.title{font-size:1.5em}.div-maincontent>div>div.intro{margin:15px 0}.div-maincontent>div>div.date{color:#888;font-size:.9em;border-bottom:1px solid #f1f1f1}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.menuChildren{transform:scale(1);opacity:1;top:.5em}.menuChildren-enter{top:3em;opacity:0;transform:scale(.9)}.menuChildren-enter.menuChildren-enter-active{transform:scale(1);opacity:1;top:.5em;transition:350ms}.menuChildren-leave{transform:scale(1);opacity:1;top:.5em}.menuChildren-leave.menuChildren-leave-active{top:3em;opacity:0;transform:scale(.9);transition:350ms}", ""]);
 
 // exports
 

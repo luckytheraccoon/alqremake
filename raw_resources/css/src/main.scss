@@ -46,8 +46,9 @@ html, body {
 	@include full-span();
 }
 a {
+	cursor:pointer;
+	color: #317795;
 	&:link, &:visited {
-	    color: #317795;
 	    text-decoration: none;
 	    font-weight: normal;
 	}
@@ -60,8 +61,8 @@ a {
 .div-main {
 	display: grid;
 	grid-template: {
-		columns: [margin-left] 15% [col1] auto [col2] auto [margin-right] 15%;
-	  	rows: [header] 207px [headerbar] 2.6em [body] auto [footer] auto;
+		columns: [margin-left] 15% [col1] 210px [col2] auto [margin-right] 15%;
+	  	rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
 		areas: 
 		". header header ."
 		". headerbar headerbar ."
@@ -245,6 +246,10 @@ a {
 	grid-area: headerbar;
 	position:relative;
 }
+.div-maincontent {
+	grid-area: maincontent;
+	position:relative;
+}
 .div-headerbar-across {
 	position:absolute;
 	height: 2.6em;
@@ -326,6 +331,7 @@ a {
 	position:absolute;
 	width:260px;
 	top:0.5em;
+	z-index: 1;
 }
 
 .div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div {
@@ -416,7 +422,31 @@ a {
 	grid-area: sidebar;
 }
 .div-maincontent {
+	width:870px;
 	grid-area: maincontent;
+	
+	&>div {
+		padding:15px 0;
+		border-bottom:4px dotted #f1f1f1;	
+	}
+	
+	&>div>div {
+		margin:5px 0;
+	}
+
+	&>div>div.title {
+		font-size:1.5em;
+	}
+
+	&>div>div.intro {
+		margin:15px 0;
+	}
+
+	&>div>div.date {
+		color: #888;
+    	font-size: 0.9em;
+		border-bottom:1px solid #f1f1f1;	
+	}
 }
 .div-footer {
 	grid-area: footer;
@@ -463,18 +493,3 @@ $animation-short-duration: 350ms;
 	transform: scale(0.9);
   	transition: $animation-short-duration;
 }
-
-
-/*
-	top:4em;
-	opacity:0;
-	transform: scale(0.9);
-	@include prefix((
-		transition: ease_350ms_all
-	), webkit moz o);
-
-	&.visible {
-		transform: scale(1);
-		opacity:1;
-		top:2.5em;
-	}*/
