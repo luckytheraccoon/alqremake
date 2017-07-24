@@ -44,6 +44,7 @@ html, body {
 }
 #root {
 	@include full-span();
+	background: url('../../../images/sprite-1.png') no-repeat center 0;
 }
 a {
 	cursor:pointer;
@@ -58,10 +59,15 @@ a {
 	}
 
 }
-.div-main {
+
+@mixin full-span() {
+	width:100%;
+	height:100%;
+}
+
+@mixin div-main-grid() {
 	display: grid;
 	grid-template: {
-		columns: [margin-left] 15% [col1] 210px [col2] auto [margin-right] 15%;
 	  	rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
 		areas: 
 		". header header ."
@@ -70,8 +76,49 @@ a {
 		". footer footer .";
 	}
 	@include full-span();
-	min-width: 1045px;
 }
+
+@media (min-width:800px) {
+	body {
+		background-color: blue;
+	}
+    .div-main {
+    	@include div-main-grid();
+		grid-template-columns: [margin-left] 0% [col1] 35% [col2] 65% [margin-right] 0%;
+    }
+}
+
+@media (min-width:1000px) {
+	body {
+		background-color: blue;
+	}
+    .div-main {
+    	@include div-main-grid();
+		grid-template-columns: [margin-left] 5% [col1] 30% [col2] 60% [margin-right] 5%;
+    }
+}
+
+@media (min-width:1200px) {
+	body {
+		background-color: green;
+	}
+    .div-main {
+    	@include div-main-grid();
+		grid-template-columns: [margin-left] 10% [col1] 25% [col2] 55% [margin-right] 10%;
+    }
+}
+
+@media (min-width:1400px) {
+	body {
+		background-color: red;
+	}
+    .div-main {
+    	@include div-main-grid();
+		grid-template-columns: [margin-left] 15% [col1] 20% [col2] 50% [margin-right] 15%;
+    }
+}
+
+/*
 .div-header-images-1 {
 	position: absolute;
     top: -260px;
@@ -89,7 +136,7 @@ a {
 }
 @keyframes image1Animation {
     to {top: 0px;}
-}
+}*/
 
 .div-header-images-2 {
 	opacity:0;
@@ -142,8 +189,8 @@ a {
 	opacity:0.8;
 	transform: scale(0.9);
 	position: absolute;
-	top: 145px;
-    left: 335px;
+	top: 140px;
+    left: 23%;
 	background: url('../../../images/sprite-1.png') no-repeat -327px -271px;
 	width: 178px;
 	height: 25px;
@@ -168,7 +215,7 @@ a {
 	transform: scale(0.9);
 	position: absolute;
 	top: 160px;
-    left: 375px;
+    left: 25%;
 	background: url('../../../images/sprite-1.png') no-repeat -328px -327px;
 	width: 579px;
 	height: 44px;
@@ -192,7 +239,7 @@ a {
 	transform: scale(0.8);
 	position: absolute;
     top: 85px;
-    left: 975px;
+    left: 80%;
     z-index: 1;
 	background: url('../../../images/sprite-1.png') no-repeat -485px -393px;
 	width: 204px;
@@ -216,7 +263,7 @@ a {
 	transform: rotate(0deg);
 	position: absolute;
     top: 68px;
-    left: 962px;
+    left: 79.5%;
     z-index: 0;
 	background: url('../../../images/sprite-1.png') no-repeat -709px -390px;
 	width: 235px;
