@@ -21,6 +21,7 @@ class MainContainer extends React.PureComponent {
     render() {
         return (
             <div className="div-main">
+                <div className="div-header-images-1"></div>
                 <Header />
                 <HeaderBar changeContentAction={this.changeContent} />
                 <Sidebar />
@@ -34,7 +35,6 @@ class MainContainer extends React.PureComponent {
 function Header() {
     return (
         <DivContainer classes="div-header">
-            <div className="div-header-images-1"></div>
             <div className="div-header-images-2"></div>
             <div className="div-header-images-3"></div>
             <div className="div-header-images-4"></div>
