@@ -54,13 +54,14 @@ a:hover {
     width: 100%
   }
 }
-.div-headerbar > .div-menu-item {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item {
   position: relative;
   display: inline-block;
   margin-top: .3em;
-  margin-left: .7em
+  margin-left: .7em;
+  z-index: 1
 }
-.div-headerbar > .div-menu-item > .div-menu-item-button {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item > .div-menu-item-button {
   opacity: 0;
   overflow: hidden;
   display: inline-block;
@@ -82,7 +83,7 @@ a:hover {
   -o-transition: ease 1s color,ease 350ms background;
   transition: ease 1s color,ease 350ms background
 }
-.div-headerbar > .div-menu-item > .div-menu-item-button:hover {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item > .div-menu-item-button:hover {
   -webkit-transition: ease 350ms all;
   -moz-transition: ease 350ms all;
   -o-transition: ease 350ms all;
@@ -91,12 +92,12 @@ a:hover {
   line-height: 6em;
   border-bottom: 4px solid orange
 }
-.div-headerbar > .div-menu-item > .div-menu-item-button:before {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item > .div-menu-item-button:before {
   content: attr(data-text);
   position: absolute;
   top: -2em
 }
-.div-headerbar > .div-menu-item > .div-menu-item-button.selected {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item > .div-menu-item-button.selected {
   -webkit-transition: ease 150ms background;
   -moz-transition: ease 150ms background;
   -o-transition: ease 150ms background;
@@ -108,20 +109,20 @@ a:hover {
     opacity: 1
   }
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container {
   position: absolute;
   width: 260px;
   top: .5em;
   z-index: 1
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div {
   background: #fff;
   padding: 5px;
   box-shadow: 0 2px 5px rgba(0,0,0,.5);
   border-radius: 5px;
   font-size: .9em
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link {
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -140,14 +141,14 @@ a:hover {
   -o-transition: ease .5s all;
   transition: ease .5s all
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover {
   text-indent: 10px;
   background: #fff
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover:before {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:hover:before {
   left: -7px
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:before {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > a.link:before {
   content: "";
   width: 0;
   height: 0;
@@ -164,7 +165,7 @@ a:hover {
   -o-transition: ease .5s all;
   transition: ease .5s all
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb {
   color: #000;
   display: block;
   padding: 10px;
@@ -174,16 +175,16 @@ a:hover {
   border-bottom-width: 0;
   box-sizing: border-box
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb:first-child {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb:first-child {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb:last-child {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.blurb:last-child {
   border-bottom-width: 1px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px
 }
-.div-headerbar > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.note {
+.div-headerbar > .div-headerbar-menu-container > .div-menu-item .div-menu-item-child-container .div-inner-container > div > div.note {
   color: #000;
   display: block;
   padding: 10px;
@@ -279,14 +280,16 @@ a:hover {
   height: 249px
 }
 .div-header-images-4 {
+  transform: scale(.7);
   position: absolute;
-  top: 140px;
-  left: 23%;
+  top: 150px;
+  left: 28%;
   background: url(../../../images/sprite-1.png) no-repeat -327px -271px;
   width: 178px;
   height: 25px
 }
 .div-header-images-5 {
+  transform: scale(.7);
   position: absolute;
   top: 160px;
   left: 25%;
@@ -340,6 +343,30 @@ a:hover {
     transform: rotate(360deg)
   }
 }
+@media (max-width:880px) {
+  .div-headerbar > .div-headerbar-menu-container > .div-menu-item {
+    margin-left: .2em
+  }
+  .div-menu-item-button > .glyphicon {
+    top: 0;
+    line-height: unset
+  }
+  #menuItem_1:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e021";
+    position: absolute;
+    top: -2em
+  }
+  .div-header-images-4 {
+    left: 7%
+  }
+  .div-header-images-5 {
+    left: 3%
+  }
+  .div-header-images-6 {
+    left: 73%
+  }
+}
 @media (max-width:1080px) {
   body {
     background-color: #00f
@@ -363,17 +390,7 @@ a:hover {
   .div-header-images-3 {
     transform: scale(.8);
     top: 5px;
-    left: 295px
-  }
-  .div-header-images-4 {
-    transform: scale(.7);
-    top: 140px;
-    left: 10%
-  }
-  .div-header-images-5 {
-    transform: scale(.7);
-    top: 140px;
-    left: 10%
+    left: 135px
   }
   .div-header-images-6 {
     animation-name: image6Animation_small;
@@ -383,6 +400,12 @@ a:hover {
   }
   .div-header-images-7 {
     display: none
+  }
+  .div-headerbar > .div-headerbar-menu-container {
+    margin: auto;
+    width: auto;
+    position: relative;
+    display: table
   }
 }
 @media (min-width:1080px) {

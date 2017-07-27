@@ -110,13 +110,14 @@ a {
 	    width: 100%;
     }
 }
-.div-headerbar>.div-menu-item {
+.div-headerbar>.div-headerbar-menu-container>.div-menu-item {
 	position:relative;
 	display:inline-block;
 	margin-top: 0.30em;
 	margin-left: 0.7em;
+	z-index: 1;
 }
-.div-headerbar>.div-menu-item>.div-menu-item-button {
+.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button {
 	opacity:0;
     overflow: hidden;
 	display:inline-block;
@@ -169,14 +170,14 @@ a {
     }
 }
 
-.div-headerbar>.div-menu-item .div-menu-item-child-container {
+.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container {
 	position:absolute;
 	width:260px;
 	top:0.5em;
 	z-index: 1;
 }
 
-.div-headerbar>.div-menu-item .div-menu-item-child-container .div-inner-container>div {
+.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div {
 	background:white;
 	padding:5px;
 	box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
@@ -369,15 +370,17 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 .div-header-images-4 {
+	transform: scale(.7);
 	position: absolute;
-	top: 140px;
-    left: 23%;
+	top: 150px;
+    left: 28%;
 	background: url($div-header-images-url) no-repeat -327px -271px;
 	width: 178px;
 	height: 25px;
 }
 
 .div-header-images-5 {
+	transform: scale(.7);
 	position: absolute;
 	top: 160px;
     left: 25%;
@@ -442,6 +445,35 @@ $div-header-images-url: '../../../images/sprite-1.png';
     }
 }
 
+@media (max-width:880px) {
+	.div-headerbar>.div-headerbar-menu-container>.div-menu-item {
+    	margin-left: .2em;
+	}
+
+	.div-menu-item-button>.glyphicon {
+		top:0;
+		line-height:unset;
+	}
+	#menuItem_1 {
+		&:before{
+			font-family: 'Glyphicons Halflings';
+		    content: "\e021";
+		    position: absolute;
+		    top: -2em;
+		}
+	}
+	.div-header-images-4 {
+	    left: 7%;
+	}
+	.div-header-images-5 {
+	    left: 3%;
+	}
+	.div-header-images-6 {
+	    left: 73%;
+	}
+}
+
+
 @media (max-width:1080px) {
 	body {
 		background-color: blue;
@@ -450,7 +482,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 1% [col1] 34% [col2] 64% [margin-right] 1%;
     }
-
 	.div-headerbar-across {
 		background:#272847;
 	}
@@ -462,17 +493,7 @@ $div-header-images-url: '../../../images/sprite-1.png';
 	.div-header-images-3 {
 		transform: scale(0.8);
 		top: 5px;
-	    left: 295px;
-	}
-	.div-header-images-4 {
-		transform: scale(0.7);
-		top: 140px;
-	    left: 10%;
-	}
-	.div-header-images-5 {
-		transform: scale(0.7);
-		top: 140px;
-	    left: 10%;
+	    left: 135px;
 	}
 	.div-header-images-6 {
 		animation-name: image6Animation_small;
@@ -482,6 +503,12 @@ $div-header-images-url: '../../../images/sprite-1.png';
 	}
 	.div-header-images-7 {
 	    display:none;
+	}
+	.div-headerbar>.div-headerbar-menu-container {
+		margin: auto;
+		width: auto;
+		position: relative;
+		display: table;
 	}
 }
 

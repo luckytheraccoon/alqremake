@@ -87,7 +87,7 @@ class HeaderBar extends React.PureComponent {
             }
             
             return(    
-                <MenuItem contentId={item.contentId} changeContentAction={this.changeContentAction} id={item.id} key={item.id} label={item.text}>
+                <MenuItem alternate={item.alternate} contentId={item.contentId} changeContentAction={this.changeContentAction} id={item.id} key={item.id} label={item.text}>
                     {children}
                 </MenuItem>
             );
@@ -96,7 +96,9 @@ class HeaderBar extends React.PureComponent {
         return (
             <DivContainer classes="div-headerbar">
                 <div className="div-headerbar-across"></div>
-                {menuItems}
+                <div className="div-headerbar-menu-container">
+                    {menuItems}
+                </div>
             </DivContainer>
         );
     }
@@ -204,9 +206,31 @@ class MenuItem extends React.PureComponent {
             if (this.props.children) {
                 if(thisElement.nextSibling) {
                     let childContainer = thisElement.nextSibling;
-                    childContainer.style.left = -130 + (thisElement.offsetWidth/2) + "px";
+                    //reset the element's left parameter so it doesnt interfere 
+                    //with the offset calculation
+                    childContainer.style.left = 0; 
+                    //the offset is a calculated value to get the box to position
+                    //perfectly at the center of the clicked button
+                    let offset = -130 + (thisElement.offsetWidth/2);
+                    //now lets find out if the box is completely visible according
+                    //to the window width, for that, lets get the current left and right bounding rect
+                    let elemLeft = childContainer.getBoundingClientRect().left;
+                    let elemRight = childContainer.getBoundingClientRect().right - offset;
+                    //check then if the element is completely visible or not
+                    let isCompletelyVisible = (elemLeft >= 0) && (elemRight <= window.innerWidth);
+                    //if it isnt, lets fix it by moving it further towards the left
+                    if(!isCompletelyVisible) {
+                        //first, how much of the element is not visible?
+                        let elementOOB = elemRight - window.innerWidth;
+                        //now add this to the offset value :)
+                        //also add a bit of padding so its not glued to the edge
+                        offset = offset - elementOOB - 10;
+                    }
+                    //actually position the elemnt, finally
+                    childContainer.style.left = offset + "px";
                     childContainer.style.position = "relative";
                     childContainer.style.display = "block";
+
                 }
             }
 
@@ -243,7 +267,8 @@ class MenuItem extends React.PureComponent {
         
         return (
             <div className="div-menu-item">
-                <div className={buttonClass} onClick={this.handleClick} data-text={this.props.label}>
+                <div id={this.props.id} className={buttonClass} onClick={this.handleClick} data-text={this.props.label}>
+                    {this.props.alternate}
                     {this.props.label}
                 </div>
 
