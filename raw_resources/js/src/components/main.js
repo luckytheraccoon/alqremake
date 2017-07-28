@@ -87,7 +87,7 @@ class HeaderBar extends React.PureComponent {
             }
             
             return(    
-                <MenuItem alternate={item.alternate} contentId={item.contentId} changeContentAction={this.changeContentAction} id={item.id} key={item.id} label={item.text}>
+                <MenuItem alternateLabel={item.alternateLabel} alternateComponent={item.alternateComponent} contentId={item.contentId} changeContentAction={this.changeContentAction} id={item.id} key={item.id} label={item.label}>
                     {children}
                 </MenuItem>
             );
@@ -258,18 +258,32 @@ class MenuItem extends React.PureComponent {
 
         let buttonClass = "div-menu-item-button noselect";
         let children;
+        let alternate;
+        let original;
 
         if(this.state.showChildren) {
             children = this.props.children;
             buttonClass += " selected";
         }
 
+        if(this.props.alternateComponent) {
+            buttonClass += " alternate";
+            alternate = <div className="menu-item-alternate">{this.props.alternateComponent}</div>;
+            original = <div className="menu-item-original">{this.props.label}</div>;
+        } else if (this.props.alternateLabel) {
+            buttonClass += " alternate";
+            alternate = <div className="menu-item-alternate">{this.props.alternateLabel}</div>;
+            original = <div className="menu-item-original">{this.props.label}</div>;
+        } else {
+            original = <div>{this.props.label}</div>;
+        }
+
         
         return (
-            <div className="div-menu-item">
-                <div id={this.props.id} className={buttonClass} onClick={this.handleClick} data-text={this.props.label}>
-                    {this.props.alternate}
-                    {this.props.label}
+            <div id={this.props.id} className="div-menu-item">
+                <div className={buttonClass} onClick={this.handleClick} data-alternate-label={this.props.alternateLabel} data-label={this.props.label}>
+                    {alternate}
+                    {original}
                 </div>
 
                 <ReactCSSTransitionGroup 
