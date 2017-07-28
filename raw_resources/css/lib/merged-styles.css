@@ -353,9 +353,6 @@ a:hover {
   }
 }
 @media (max-width:1080px) {
-  body {
-    background-color: #00f
-  }
   .div-main {
     display: grid;
     grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
@@ -444,9 +441,12 @@ a:hover {
   }
 }
 @media (max-width:460px) {
+  .div-header-images-1 {
+    display: none
+  }
   .div-header-images-2 {
     top: 100px;
-    left: 0;
+    left: -10px;
     right: 0;
     margin: auto;
     z-index: 2
@@ -465,7 +465,6 @@ a:hover {
 }
 @media (max-width:360px) {
   .div-header-images-2 {
-    transform: scale(.6);
     left: -20px
   }
   #menuItem_5 {
@@ -473,9 +472,6 @@ a:hover {
   }
 }
 @media (min-width:1080px) {
-  body {
-    background-color: #00f
-  }
   .div-main {
     display: grid;
     grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
@@ -486,9 +482,6 @@ a:hover {
   }
 }
 @media (min-width:1170px) {
-  body {
-    background-color: #00f
-  }
   .div-main {
     display: grid;
     grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
@@ -499,9 +492,6 @@ a:hover {
   }
 }
 @media (min-width:1310px) {
-  body {
-    background-color: green
-  }
   .div-main {
     display: grid;
     grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;
@@ -512,9 +502,6 @@ a:hover {
   }
 }
 @media (min-width:1500px) {
-  body {
-    background-color: red
-  }
   .div-main {
     display: grid;
     grid-template-rows: [header] 207px [headerbar] 2.6em [maincontent] auto [footer] auto;

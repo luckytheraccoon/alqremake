@@ -458,9 +458,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 @media (max-width:1080px) {
-	body {
-		background-color: blue;
-	}
     .div-main {
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 1% [col1] 34% [col2] 64% [margin-right] 1%;
@@ -560,9 +557,12 @@ $div-header-images-url: '../../../images/sprite-1.png';
 	}
 }
 @media (max-width:460px) {
+	.div-header-images-1 {
+		display:none;
+	}
 	.div-header-images-2 {
 		top:100px;
-		left: 0;
+		left: -10px;
 		right: 0;
 		margin: auto;
 		z-index:2;
@@ -581,8 +581,7 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 @media (max-width:360px) {
 	.div-header-images-2 {
-		transform: scale(0.6);
-		left:-20px;
+		left: -20px;
 	}
 	#menuItem_5 {
 		display:none;
@@ -590,9 +589,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 @media (min-width:1080px) {
-	body {
-		background-color: blue;
-	}
     .div-main {
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 1% [col1] 34% [col2] 64% [margin-right] 1%;
@@ -600,9 +596,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 @media (min-width:1170px) {
-	body {
-		background-color: blue;
-	}
     .div-main {
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 5% [col1] 30% [col2] 60% [margin-right] 5%;
@@ -610,9 +603,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 @media (min-width:1310px) {
-	body {
-		background-color: green;
-	}
     .div-main {
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 10% [col1] 25% [col2] 55% [margin-right] 10%;
@@ -620,9 +610,6 @@ $div-header-images-url: '../../../images/sprite-1.png';
 }
 
 @media (min-width:1500px) {
-	body {
-		background-color: red;
-	}
     .div-main {
     	@include div-main-grid();
 		grid-template-columns: [margin-left] 15% [col1] 20% [col2] 50% [margin-right] 15%;
