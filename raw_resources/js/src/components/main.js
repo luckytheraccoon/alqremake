@@ -21,28 +21,20 @@ class MainContainer extends React.PureComponent {
     render() {
         return (
             <div className="div-main">
-                <div className="div-header-images-1"></div>
-                <Header />
-                <HeaderBar changeContentAction={this.changeContent} />
-                <Sidebar />
+                <DivContainer classes="div-header">
+                    <span className="glyphicon glyphicon-user"></span>
+                    ALQUIMIA ALIMENTAR
+                </DivContainer>
+                <DivContainer classes="div-mobile-top-menu">
+                    <span className="back-arrow glyphicon glyphicon-triangle-left"></span>
+                    <span className="burger-menu glyphicon glyphicon-menu-hamburger"></span>
+                    <span className="close-cross glyphicon glyphicon-remove"></span>
+                </DivContainer>
                 <MainContent changeContentAction={this.changeContent} contentId={this.state.contentId} />
                 <Footer />
             </div>
         );
     }
-}
-
-function Header() {
-    return (
-        <DivContainer classes="div-header">
-            <div className="div-header-images-2"></div>
-            <div className="div-header-images-3"></div>
-            <div className="div-header-images-4"></div>
-            <div className="div-header-images-5"></div>
-            <div className="div-header-images-6"></div>
-            <div className="div-header-images-7"></div>
-        </DivContainer>
-    );
 }
 
 class InnerLink extends React.PureComponent {
