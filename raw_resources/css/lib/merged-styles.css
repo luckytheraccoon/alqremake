@@ -365,7 +365,9 @@ a:hover {
     background: #272847
   }
   .div-header-images-2 {
-    transform: scale(.8);
+    background: url(../../../images/sprite-1.png) no-repeat -15px -658px;
+    width: 247px;
+    height: 83px;
     top: 15px;
     left: -20px
   }

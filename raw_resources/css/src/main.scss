@@ -421,7 +421,7 @@ $div-header-images-url: '../../../images/sprite-1.png';
     top: 68px;
     left: 79.5%;
     z-index: 0;
-	background: url('../../../images/sprite-1.png') no-repeat -709px -390px;
+	background: url($div-header-images-url) no-repeat -709px -390px;
 	width: 235px;
 	height: 233px;
 
@@ -466,7 +466,9 @@ $div-header-images-url: '../../../images/sprite-1.png';
 		background:#272847;
 	}
     .div-header-images-2 {
-    	transform: scale(0.8);
+    	background: url($div-header-images-url) no-repeat -15px -658px;
+		width: 247px;
+		height: 83px;
 	    top: 15px;
 		left: -20px;
 	}
