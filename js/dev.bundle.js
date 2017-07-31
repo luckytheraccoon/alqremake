@@ -11538,38 +11538,78 @@ var MainContainer = function (_React$PureComponent) {
         var _this = _possibleConstructorReturn(this, (MainContainer.__proto__ || Object.getPrototypeOf(MainContainer)).call(this, props));
 
         _this.changeContent = _this.changeContent.bind(_this);
-        _this.state = { contentId: "home" };
+        _this.changePage = _this.changePage.bind(_this);
+        _this.state = { contentId: "news-list", previousContendId: null, pageId: "home", previousPageId: null };
         return _this;
     }
 
     _createClass(MainContainer, [{
+        key: "changePage",
+        value: function changePage(newPageId) {
+            if (newPageId != this.state.pageId) {
+                this.setState({ pageId: newPageId, previousPageId: this.state.pageId });
+            }
+        }
+    }, {
         key: "changeContent",
         value: function changeContent(newContentId) {
             if (newContentId != this.state.contentId) {
-                this.setState({ contentId: newContentId });
+                this.setState({ contentId: newContentId, previousContendId: this.state.contentId });
             }
         }
     }, {
         key: "render",
         value: function render() {
+
+            var glyphIcons = [{ id: "triangle-left", targetId: "news-list", onClick: this.changeContent }, { id: "menu-hamburger", targetId: "mobile-menu", onClick: this.changePage }, { id: "remove", targetId: this.state.previousPageId, onClick: this.changePage }];
+            var iconList = glyphIcons.map(function (iconObj) {
+                return _react2.default.createElement(Glyphicon, { key: iconObj.id, iconSuffix: iconObj.id, targetId: iconObj.targetId, clickAction: iconObj.onClick });
+            });
+
+            var mobileIcons = [];
+            var page = void 0;
+
+            switch (this.state.pageId) {
+                case "mobile-menu":
+                    mobileIcons = [iconList[2]];
+                    break;
+                default:
+                    if (typeof this.state.contentId === "number") {
+                        mobileIcons.push(iconList[0]);
+                    }
+                    mobileIcons.push(iconList[1]);
+            }
+
+            if (this.state.pageId === "home") {
+                page = _react2.default.createElement(
+                    "div",
+                    null,
+                    _react2.default.createElement(MainContent, { changeContentAction: this.changeContent, contentId: this.state.contentId }),
+                    _react2.default.createElement(Footer, null)
+                );
+            } else {
+                page = _react2.default.createElement(
+                    "div",
+                    null,
+                    "Yoyoyoyyo"
+                );
+            }
+
             return _react2.default.createElement(
                 "div",
                 { className: "div-main" },
                 _react2.default.createElement(
                     DivContainer,
                     { classes: "div-header" },
-                    _react2.default.createElement("span", { className: "glyphicon glyphicon-user" }),
+                    _react2.default.createElement(Glyphicon, { iconSuffix: "user" }),
                     "ALQUIMIA ALIMENTAR"
                 ),
                 _react2.default.createElement(
                     DivContainer,
                     { classes: "div-mobile-top-menu" },
-                    _react2.default.createElement("span", { className: "back-arrow glyphicon glyphicon-triangle-left" }),
-                    _react2.default.createElement("span", { className: "burger-menu glyphicon glyphicon-menu-hamburger" }),
-                    _react2.default.createElement("span", { className: "close-cross glyphicon glyphicon-remove" })
+                    mobileIcons
                 ),
-                _react2.default.createElement(MainContent, { changeContentAction: this.changeContent, contentId: this.state.contentId }),
-                _react2.default.createElement(Footer, null)
+                page
             );
         }
     }]);
@@ -11577,16 +11617,43 @@ var MainContainer = function (_React$PureComponent) {
     return MainContainer;
 }(_react2.default.PureComponent);
 
-var InnerLink = function (_React$PureComponent2) {
-    _inherits(InnerLink, _React$PureComponent2);
+var Glyphicon = function (_React$PureComponent2) {
+    _inherits(Glyphicon, _React$PureComponent2);
+
+    function Glyphicon(props) {
+        _classCallCheck(this, Glyphicon);
+
+        var _this2 = _possibleConstructorReturn(this, (Glyphicon.__proto__ || Object.getPrototypeOf(Glyphicon)).call(this, props));
+
+        _this2.handleClick = _this2.handleClick.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(Glyphicon, [{
+        key: "handleClick",
+        value: function handleClick() {
+            this.props.clickAction(this.props.targetId);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement("span", { onClick: this.handleClick, className: "glyphicon glyphicon-" + this.props.iconSuffix });
+        }
+    }]);
+
+    return Glyphicon;
+}(_react2.default.PureComponent);
+
+var InnerLink = function (_React$PureComponent3) {
+    _inherits(InnerLink, _React$PureComponent3);
 
     function InnerLink(props) {
         _classCallCheck(this, InnerLink);
 
-        var _this2 = _possibleConstructorReturn(this, (InnerLink.__proto__ || Object.getPrototypeOf(InnerLink)).call(this, props));
+        var _this3 = _possibleConstructorReturn(this, (InnerLink.__proto__ || Object.getPrototypeOf(InnerLink)).call(this, props));
 
-        _this2.handleClick = _this2.handleClick.bind(_this2);
-        return _this2;
+        _this3.handleClick = _this3.handleClick.bind(_this3);
+        return _this3;
     }
 
     _createClass(InnerLink, [{
@@ -11608,16 +11675,16 @@ var InnerLink = function (_React$PureComponent2) {
     return InnerLink;
 }(_react2.default.PureComponent);
 
-var HeaderBar = function (_React$PureComponent3) {
-    _inherits(HeaderBar, _React$PureComponent3);
+var HeaderBar = function (_React$PureComponent4) {
+    _inherits(HeaderBar, _React$PureComponent4);
 
     function HeaderBar(props) {
         _classCallCheck(this, HeaderBar);
 
-        var _this3 = _possibleConstructorReturn(this, (HeaderBar.__proto__ || Object.getPrototypeOf(HeaderBar)).call(this, props));
+        var _this4 = _possibleConstructorReturn(this, (HeaderBar.__proto__ || Object.getPrototypeOf(HeaderBar)).call(this, props));
 
-        _this3.changeContentAction = _this3.changeContentAction.bind(_this3);
-        return _this3;
+        _this4.changeContentAction = _this4.changeContentAction.bind(_this4);
+        return _this4;
     }
 
     _createClass(HeaderBar, [{
@@ -11628,7 +11695,7 @@ var HeaderBar = function (_React$PureComponent3) {
     }, {
         key: "render",
         value: function render() {
-            var _this4 = this;
+            var _this5 = this;
 
             var menuItems = (0, _mainMenu2.default)(this.changeContentAction).map(function (item) {
                 var children = void 0;
@@ -11642,7 +11709,7 @@ var HeaderBar = function (_React$PureComponent3) {
 
                 return _react2.default.createElement(
                     MenuItem,
-                    { alternateLabel: item.alternateLabel, alternateComponent: item.alternateComponent, contentId: item.contentId, changeContentAction: _this4.changeContentAction, id: item.id, key: item.id, label: item.label },
+                    { alternateLabel: item.alternateLabel, alternateComponent: item.alternateComponent, contentId: item.contentId, changeContentAction: _this5.changeContentAction, id: item.id, key: item.id, label: item.label },
                     children
                 );
             });
@@ -11663,8 +11730,8 @@ var HeaderBar = function (_React$PureComponent3) {
     return HeaderBar;
 }(_react2.default.PureComponent);
 
-var MainContent = function (_React$PureComponent4) {
-    _inherits(MainContent, _React$PureComponent4);
+var MainContent = function (_React$PureComponent5) {
+    _inherits(MainContent, _React$PureComponent5);
 
     function MainContent(props) {
         _classCallCheck(this, MainContent);
@@ -11678,10 +11745,13 @@ var MainContent = function (_React$PureComponent4) {
             var contentComp = [];
 
             switch (this.props.contentId) {
-                case "home":
+                case "news-list":
                     for (var i = 0; i < 6; i++) {
                         contentComp.push(_react2.default.createElement(MainContentItem, { key: i, contentChangeAction: this.props.changeContentAction, contentData: (0, _mainContent2.default)(i) }));
                     }
+                    break;
+                case "mobile-menu":
+                    contentComp.push(_react2.default.createElement(MainContentItem, { key: this.props.contentId, contentChangeAction: this.props.changeContentAction, contentData: (0, _mainContent2.default)(this.props.contentId) }));
                     break;
                 default:
                     contentComp.push(_react2.default.createElement(MainContentItem, { key: this.props.contentId, contentChangeAction: this.props.changeContentAction, contentData: (0, _mainContent2.default)(this.props.contentId) }));
@@ -11791,18 +11861,18 @@ function Note(props) {
     );
 }
 
-var MenuItem = function (_React$PureComponent5) {
-    _inherits(MenuItem, _React$PureComponent5);
+var MenuItem = function (_React$PureComponent6) {
+    _inherits(MenuItem, _React$PureComponent6);
 
     function MenuItem(props) {
         _classCallCheck(this, MenuItem);
 
-        var _this6 = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
+        var _this7 = _possibleConstructorReturn(this, (MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call(this, props));
 
-        _this6.handleClick = _this6.handleClick.bind(_this6);
-        _this6.handleClickOutside = _this6.handleClickOutside.bind(_this6);
-        _this6.state = { showChildren: false };
-        return _this6;
+        _this7.handleClick = _this7.handleClick.bind(_this7);
+        _this7.handleClickOutside = _this7.handleClickOutside.bind(_this7);
+        _this7.state = { showChildren: false };
+        return _this7;
     }
 
     _createClass(MenuItem, [{
@@ -11938,8 +12008,8 @@ var MenuItem = function (_React$PureComponent5) {
     return MenuItem;
 }(_react2.default.PureComponent);
 
-var MenuItemChildContainer = function (_React$PureComponent6) {
-    _inherits(MenuItemChildContainer, _React$PureComponent6);
+var MenuItemChildContainer = function (_React$PureComponent7) {
+    _inherits(MenuItemChildContainer, _React$PureComponent7);
 
     function MenuItemChildContainer() {
         _classCallCheck(this, MenuItemChildContainer);
@@ -22996,7 +23066,7 @@ var _main = __webpack_require__(93);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (contentChangeAction) {
-    return [{ id: "menuItem_1", label: "Home", contentId: "home", alternateComponent: [_react2.default.createElement("span", { key: "alt-menuItem_1-inner", className: "glyphicon glyphicon-home", "aria-hidden": "true" })] }, { id: "menuItem_2", label: "Meu Perfil", contentId: 1, alternateLabel: "Perfil" }, { id: "menuItem_3", label: "Artigos e Notícias", contentId: 2, alternateLabel: "Artigos" }, { id: "menuItem_4", label: "Seminários", contentId: 3 }, { id: "menuItem_5", label: "Consultas", children: [_react2.default.createElement(
+    return [{ id: "menuItem_1", label: "Home", contentId: "news-list", alternateComponent: [_react2.default.createElement("span", { key: "alt-menuItem_1-inner", className: "glyphicon glyphicon-home", "aria-hidden": "true" })] }, { id: "menuItem_2", label: "Meu Perfil", contentId: 1, alternateLabel: "Perfil" }, { id: "menuItem_3", label: "Artigos e Notícias", contentId: 2, alternateLabel: "Artigos" }, { id: "menuItem_4", label: "Seminários", contentId: 3 }, { id: "menuItem_5", label: "Consultas", children: [_react2.default.createElement(
             "div",
             { key: "menuItem_5-inner" },
             _react2.default.createElement(
@@ -23220,7 +23290,7 @@ exports = module.exports = __webpack_require__(184)(undefined);
 
 
 // module
-exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a{cursor:pointer;color:#317795}a:link,a:visited{text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;width:100%;height:100%;grid-template-rows:[header] auto [maincontent] auto [footer] auto;grid-template-areas:\"header header header mobile-top-menu\" \"maincontent maincontent maincontent maincontent\" \"footer footer footer footer\";grid-template-columns:[leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr}@media (max-width:320px){.div-main{display:grid;width:100%;height:100%;grid-template-rows:[header] 60px [maincontent] auto [footer] auto;grid-template-areas:\"header header header mobile-top-menu\" \"maincontent maincontent maincontent maincontent\" \"footer footer footer footer\";grid-template-columns:[leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr}}.back-arrow,.close-cross{display:none}.div-header{grid-area:header;background-color:#b2b200;position:relative;color:#fff;line-height:60px}.div-mobile-top-menu{grid-area:mobile-top-menu;font-size:2em;text-align:right;padding:0 15px;background-color:#b2b200;position:relative;color:#fff;line-height:60px}.div-headerbar{grid-area:headerbar;position:relative}.div-maincontent{grid-area:maincontent;position:relative;padding:0 20px}.div-headerbar-across{position:absolute;height:2.6em;width:0;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px;animation-timing-function:linear;animation-name:headerBarAcrossAnimation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes headerBarAcrossAnimation{to{width:100%}}.div-headerbar>.div-headerbar-menu-container>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em;z-index:1}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button{opacity:0;overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;animation-timing-function:linear;animation-name:buttonsAnimation;animation-fill-mode:forwards;animation-duration:350ms;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button:before{content:attr(data-label);position:absolute;top:-2em}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button>.menu-item-alternate{display:none}@keyframes buttonsAnimation{to{opacity:1}}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container{position:absolute;width:260px;top:.5em;z-index:1}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{position:relative;overflow:hidden;cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-radius:5px;border-width:0;border-bottom-width:1px;border-style:solid;transform:perspective(1px) translateZ(0);-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover{text-indent:10px;background:#fff}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover:before{left:-7px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:before{content:\"\";width:0;height:0;border-top:19px solid transparent;border-left:19px solid rgba(49,119,149,.5);border-bottom:19px solid transparent;position:absolute;top:-1px;left:-15px;right:0;bottom:0;-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{grid-area:maincontent}.div-maincontent>div{padding:15px 0;border-bottom:4px dotted #f1f1f1}.div-maincontent>div>div{margin:5px 0}.div-maincontent>div>div.title{font-size:1.5em}.div-maincontent>div>div.intro{margin:15px 0}.div-maincontent>div>div.date{color:#888;font-size:.9em;border-bottom:1px solid #f1f1f1}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.menuChildren{transform:scale(1);opacity:1;top:.5em}.menuChildren-enter{top:3em;opacity:0;transform:scale(.9)}.menuChildren-enter.menuChildren-enter-active{transform:scale(1);opacity:1;top:.5em;transition:350ms}.menuChildren-leave{transform:scale(1);opacity:1;top:.5em}.menuChildren-leave.menuChildren-leave-active{top:3em;opacity:0;transform:scale(.9);transition:350ms}", ""]);
+exports.push([module.i, "body,html{margin:0;padding:0;overflow-x:hidden;font-family:'Varela Round',sans-serif;font-size:14px;width:100%;height:100%}#root{width:100%;height:100%}a{cursor:pointer;color:#317795}a:link,a:visited{text-decoration:none;font-weight:400}a:focus,a:hover{color:#23527c}.div-main{display:grid;width:100%;grid-template-rows:[header] auto [maincontent] auto [footer] auto;grid-template-areas:\"header header header mobile-top-menu\" \"maincontent maincontent maincontent maincontent\" \"footer footer footer footer\";grid-template-columns:[leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr}@media (max-width:320px){.div-main{display:grid;width:100%;grid-template-rows:[header] 60px [maincontent] auto [footer] auto;grid-template-areas:\"header header header mobile-top-menu\" \"maincontent maincontent maincontent maincontent\" \"footer footer footer footer\";grid-template-columns:[leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr}}.div-header{grid-area:header;background-color:#b2b200;position:relative;color:#fff;line-height:60px}.div-mobile-top-menu{grid-area:mobile-top-menu;font-size:2em;text-align:right;padding:0 15px;background-color:#b2b200;position:relative;color:#fff;line-height:60px}.div-headerbar{grid-area:headerbar;position:relative}.div-maincontent{grid-area:maincontent;position:relative;padding:0 20px}.div-headerbar-across{position:absolute;height:2.6em;width:0;background:linear-gradient(to right,#272847 0,rgba(39,40,71,.7) 70%,rgba(39,40,71,0) 80%,rgba(39,40,71,0) 100%);border-radius:20px;animation-timing-function:linear;animation-name:headerBarAcrossAnimation;animation-fill-mode:forwards;animation-duration:350ms}@keyframes headerBarAcrossAnimation{to{width:100%}}.div-headerbar>.div-headerbar-menu-container>.div-menu-item{position:relative;display:inline-block;margin-top:.3em;margin-left:.7em;z-index:1}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button{opacity:0;overflow:hidden;display:inline-block;padding:0 10px;height:2em;font-size:1em;line-height:2em;position:relative;cursor:pointer;color:#fff;border-radius:20px;box-sizing:border-box;animation-timing-function:linear;animation-name:buttonsAnimation;animation-fill-mode:forwards;animation-duration:350ms;-webkit-transition:ease 1s color,ease 350ms background;-moz-transition:ease 1s color,ease 350ms background;-o-transition:ease 1s color,ease 350ms background;transition:ease 1s color,ease 350ms background}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button:hover{-webkit-transition:ease 350ms all;-moz-transition:ease 350ms all;-o-transition:ease 350ms all;transition:ease 350ms all;background:#e68a46;line-height:6em;border-bottom:4px solid orange}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button:before{content:attr(data-label);position:absolute;top:-2em}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button.selected{-webkit-transition:ease 150ms background;-moz-transition:ease 150ms background;-o-transition:ease 150ms background;transition:ease 150ms background;background:orange}.div-headerbar>.div-headerbar-menu-container>.div-menu-item>.div-menu-item-button>.menu-item-alternate{display:none}@keyframes buttonsAnimation{to{opacity:1}}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container{position:absolute;width:260px;top:.5em;z-index:1}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div{background:#fff;padding:5px;box-shadow:0 2px 5px rgba(0,0,0,.5);border-radius:5px;font-size:.9em}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link{position:relative;overflow:hidden;cursor:pointer;display:block;padding:10px;white-space:nowrap;background:#f9f9f9;border-color:#ccc;border-radius:5px;border-width:0;border-bottom-width:1px;border-style:solid;transform:perspective(1px) translateZ(0);-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover{text-indent:10px;background:#fff}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:hover:before{left:-7px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>a.link:before{content:\"\";width:0;height:0;border-top:19px solid transparent;border-left:19px solid rgba(49,119,149,.5);border-bottom:19px solid transparent;position:absolute;top:-1px;left:-15px;right:0;bottom:0;-webkit-transition:ease .5s all;-moz-transition:ease .5s all;-o-transition:ease .5s all;transition:ease .5s all}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb{color:#000;display:block;padding:10px;border-color:#ccc;border-width:1px;border-style:solid;border-bottom-width:0;box-sizing:border-box}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.blurb:last-child{border-bottom-width:1px;border-bottom-left-radius:4px;border-bottom-right-radius:4px}.div-headerbar>.div-headerbar-menu-container>.div-menu-item .div-menu-item-child-container .div-inner-container>div>div.note{color:#000;display:block;padding:10px;box-sizing:border-box;font-style:italic}.div-sidebar{grid-area:sidebar}.div-maincontent{grid-area:maincontent}.div-maincontent>div{padding:15px 0;border-bottom:4px dotted #f1f1f1}.div-maincontent>div>div{margin:5px 0}.div-maincontent>div>div.title{font-size:1.5em}.div-maincontent>div>div.intro{margin:15px 0}.div-maincontent>div>div.date{color:#888;font-size:.9em;border-bottom:1px solid #f1f1f1}.div-footer{grid-area:footer}.noselect{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.menuChildren{transform:scale(1);opacity:1;top:.5em}.menuChildren-enter{top:3em;opacity:0;transform:scale(.9)}.menuChildren-enter.menuChildren-enter-active{transform:scale(1);opacity:1;top:.5em;transition:350ms}.menuChildren-leave{transform:scale(1);opacity:1;top:.5em}.menuChildren-leave.menuChildren-leave-active{top:3em;opacity:0;transform:scale(.9);transition:350ms}", ""]);
 
 // exports
 

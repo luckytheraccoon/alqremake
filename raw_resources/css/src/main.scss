@@ -59,16 +59,10 @@ a {
 
 }
 
-@mixin full-span() {
-	width:100%;
-	height:100%;
-}
-
 @mixin div-main-grid() {
 	display: grid;
-	@include full-span();
+	width:100%;
 }
-
 
 .div-main {
 	@include div-main-grid();
@@ -101,10 +95,6 @@ a {
 	position: relative;
 	color: white;
 	line-height: 60px;
-}
-.back-arrow,
-.close-cross {
-	display:none
 }
 .div-header {
 	grid-area: header;

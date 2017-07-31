@@ -9,31 +9,90 @@ class MainContainer extends React.PureComponent {
     constructor(props) {
         super(props);
         this.changeContent = this.changeContent.bind(this);
-        this.state = {contentId:"home"};
+        this.changePage = this.changePage.bind(this);
+        this.state = {contentId:"news-list", previousContendId:null, pageId:"home", previousPageId:null};
+    }
+
+    changePage(newPageId) {
+        if(newPageId != this.state.pageId) {
+            this.setState({pageId:newPageId, previousPageId:this.state.pageId});
+        }
     }
 
     changeContent(newContentId) {
         if(newContentId != this.state.contentId) {
-            this.setState({contentId:newContentId});
+            this.setState({contentId:newContentId, previousContendId:this.state.contentId});
         }
     }
 
     render() {
+
+        let glyphIcons = [
+            {id:"triangle-left", targetId:"news-list", onClick:this.changeContent}, 
+            {id:"menu-hamburger", targetId:"mobile-menu", onClick:this.changePage}, 
+            {id:"remove", targetId:this.state.previousPageId, onClick:this.changePage}
+        ];
+        let iconList = glyphIcons.map((iconObj) =>
+            <Glyphicon key={iconObj.id} iconSuffix={iconObj.id} targetId={iconObj.targetId} clickAction={iconObj.onClick} />
+        );
+
+        let mobileIcons = [];
+        let page;
+
+        switch(this.state.pageId) {
+            case "mobile-menu":
+                mobileIcons = [iconList[2]];
+                break;
+            default:
+                if(typeof this.state.contentId === "number") {
+                    mobileIcons.push(iconList[0]);
+                }
+                mobileIcons.push(iconList[1]);
+        }
+
+        if(this.state.pageId === "home") {
+            page = (
+                <div>
+                    <MainContent changeContentAction={this.changeContent} contentId={this.state.contentId} />
+                    <Footer />
+                </div>
+            );
+        } else {
+            page = ( 
+                <div>
+                    Yoyoyoyyo
+                </div>
+            );
+        }
+
         return (
             <div className="div-main">
                 <DivContainer classes="div-header">
-                    <span className="glyphicon glyphicon-user"></span>
+                    <Glyphicon iconSuffix='user' />
                     ALQUIMIA ALIMENTAR
                 </DivContainer>
                 <DivContainer classes="div-mobile-top-menu">
-                    <span className="back-arrow glyphicon glyphicon-triangle-left"></span>
-                    <span className="burger-menu glyphicon glyphicon-menu-hamburger"></span>
-                    <span className="close-cross glyphicon glyphicon-remove"></span>
+                    {mobileIcons}
                 </DivContainer>
-                <MainContent changeContentAction={this.changeContent} contentId={this.state.contentId} />
-                <Footer />
+                {page}
             </div>
         );
+    }
+}
+
+class Glyphicon extends React.PureComponent {
+
+    constructor(props) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+    
+    handleClick() {
+        this.props.clickAction(this.props.targetId);
+    }
+
+    render() {
+        return <span onClick={this.handleClick} className={"glyphicon glyphicon-" + this.props.iconSuffix} ></span>;
     }
 }
 
@@ -106,10 +165,13 @@ class MainContent extends React.PureComponent {
         let contentComp = [];
 
         switch(this.props.contentId) {
-            case "home":
+            case "news-list":
                 for (var i = 0; i < 6; i++) {
                     contentComp.push(<MainContentItem key={i} contentChangeAction={this.props.changeContentAction} contentData={fetchMainContent(i)} />);
                 }
+                break;
+            case "mobile-menu":
+                contentComp.push(<MainContentItem key={this.props.contentId} contentChangeAction={this.props.changeContentAction} contentData={fetchMainContent(this.props.contentId)} />);
                 break;
             default:
                 contentComp.push(<MainContentItem key={this.props.contentId} contentChangeAction={this.props.changeContentAction} contentData={fetchMainContent(this.props.contentId)} />);

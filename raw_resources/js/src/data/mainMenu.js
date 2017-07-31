@@ -2,7 +2,7 @@ import React from "react";
 import {InnerLink, Alink, Blurb, Note} from "../components/main";
 export default (contentChangeAction) => {
     return [
-        {id:"menuItem_1", label: "Home", contentId:"home", alternateComponent:[
+        {id:"menuItem_1", label: "Home", contentId:"news-list", alternateComponent:[
             <span key="alt-menuItem_1-inner" className="glyphicon glyphicon-home" aria-hidden="true"></span>
         ]},
         {id:"menuItem_2", label: "Meu Perfil", contentId:1, alternateLabel:"Perfil"},

@@ -23,7 +23,6 @@ a {
 .div-main {
   display: grid;
   width: 100%;
-  height: 100%;
   grid-template-rows: [header] auto [maincontent] auto [footer] auto;
   grid-template-areas: "header header header mobile-top-menu" "maincontent maincontent maincontent maincontent" "footer footer footer footer";
   grid-template-columns: [leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr; }
@@ -32,14 +31,9 @@ a {
   .div-main {
     display: grid;
     width: 100%;
-    height: 100%;
     grid-template-rows: [header] 60px [maincontent] auto [footer] auto;
     grid-template-areas: "header header header mobile-top-menu" "maincontent maincontent maincontent maincontent" "footer footer footer footer";
     grid-template-columns: [leftCol1] 1.5fr [leftCol2] 2.5fr [rightCol1] 3fr [rightCol2] 3fr; } }
-
-.back-arrow,
-.close-cross {
-  display: none; }
 
 .div-header {
   grid-area: header;
